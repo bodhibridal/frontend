@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-
+import { useUserProfile } from '../context/UseProfileContext';
 const LinkedInCallback = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const { updateProfile, refreshProfile } = useUserProfile();
     const [status, setStatus] = useState('Processing login...');
 
-   // LinkedInCallback.jsx में useEffect के अंदर
 useEffect(() => {
     const handleCallback = async () => {
         const code = searchParams.get('code');
@@ -27,7 +27,7 @@ useEffect(() => {
         try {
             setStatus('Verifying LinkedIn authentication...');
             
-            // ✅ CORRECT Backend URL
+            //  CORRECT Backend URL
             const backendUrl = import.meta.env.VITE_API_BASE_URL || 'https://backend-q0wc.onrender.com';
             const apiUrl = `${backendUrl}/api/linkedin/callback?code=${code}`;
             
@@ -43,16 +43,23 @@ useEffect(() => {
             const data = await response.json();
             console.log('✅ Backend response:', data);
             
-            // ✅ Check response structure
+            //  Check response structure
             if (data.success && data.token) {
                 // Save tokens
                 localStorage.setItem('accessToken', data.token);
                 
-                if (data.user) {
-                    localStorage.setItem('currentUser', JSON.stringify(data.user));
+                if (data.refreshToken) {
+                    localStorage.setItem('refreshToken', data.refreshToken);
                 }
                 
-                console.log('✅ LinkedIn login successful!');
+                if (data.user) {
+                    localStorage.setItem('currentUser', JSON.stringify(data.user));
+                    updateProfile(data.user);
+                }
+                
+                console.log('✅ LinkedIn login successful,refreshing profile...');
+            
+                refreshProfile();
                 navigate('/dashboard');
             } else {
                 throw new Error(data.message || 'Login failed');
@@ -60,12 +67,27 @@ useEffect(() => {
             
         } catch (error) {
             console.error('❌ LinkedIn callback error:', error);
-            navigate('/login?error=auth_failed');
-        }
-    };
+        
+            
+                // Extract more detail if possible
+                let errorMessage = 'Authentication failed';
+                if (error.message.includes('Backend error: 429')) {
+                    errorMessage = 'LinkedIn rate limit reached. Please wait a few minutes before trying again.';
+                } else if (error.message.includes('Backend error: 500')) {
+                    errorMessage = 'Server synchronization error. Please try again or contact support.';
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
 
-    handleCallback();
-}, [searchParams, navigate]);
+                setStatus(`Error: ${errorMessage}`);
+                setTimeout(() => {
+                    navigate('/login?error=auth_failed');
+                }, 3000);
+            }
+        };
+
+        handleCallback();
+    }, [searchParams, navigate]);
 
     return (
         <div style={{ textAlign: 'center', marginTop: '100px', fontFamily: 'sans-serif' }}>

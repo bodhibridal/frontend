@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { chatApi } from "../services/chatApi";
 import io from "socket.io-client";
@@ -24,13 +23,17 @@ export default function MessagesSection() {
   const [recentChatsLoading, setRecentChatsLoading] = useState(true);
   const [showDeleteOption, setShowDeleteOption] = useState(null);
   const [deletingMessageId, setDeletingMessageId] = useState(null);
-
   const [messageLimitReached, setMessageLimitReached] = useState(false);
+  
+  //  PROFILE PICTURES STATES
+  const [userProfilePictures, setUserProfilePictures] = useState({});
+  const [profilePicturesLoaded, setProfilePicturesLoaded] = useState(false);
+  
   // for open img
   const [selectedImage, setSelectedImage] = useState(null);
   const [showImageModal, setShowImageModal] = useState(false);
 
-  //  yeh plant states add kra
+  // plant states
   const [planStatus, setPlanStatus] = useState({
     loading: true,
     active: false,
@@ -48,14 +51,75 @@ export default function MessagesSection() {
     console.log("Access Token:", localStorage.getItem("accessToken"));
     console.log("Token length:", localStorage.getItem("accessToken")?.length);
 
-    // Token format check
     const token = localStorage.getItem("accessToken");
     if (token) {
       console.log("Token starts with:", token.substring(0, 20) + "...");
     }
   }, []);
 
-  //  CORRECT
+  //  IMPROVED PROFILE PICTURES FETCH
+  useEffect(() => {
+    const fetchAllProfilePictures = async () => {
+      if (!currentUserId || profilePicturesLoaded) return;
+      
+      try {
+        console.log("🔄 Fetching all profile pictures...");
+        const response = await chatApi.searchUsers('');
+        
+        if (response.data && Array.isArray(response.data)) {
+          const pictures = {};
+          
+          response.data.forEach(user => {
+            if (user.id && user.id !== currentUserId) {
+              //  Check all possible image fields with priority
+              pictures[user.id] = 
+                user.profile_picture_url || 
+                user.profile_picture ||
+                user.image_url || 
+                user.profile_image || 
+                user.avatar_url ||
+                user.avatar ||
+                user.photo_url ||
+                null;
+            }
+          });
+          
+          console.log(`${Object.keys(pictures).length} profile pictures loaded`);
+          setUserProfilePictures(pictures);
+          setProfilePicturesLoaded(true);
+          
+          // Cache in localStorage for 1 day
+          localStorage.setItem('chat_profile_pictures', JSON.stringify({
+            data: pictures,
+            timestamp: Date.now()
+          }));
+        }
+      } catch (error) {
+        console.error("❌ Error fetching profile pictures:", error);
+      }
+    };
+
+    // Check cache first
+    const cached = localStorage.getItem('chat_profile_pictures');
+    if (cached) {
+      try {
+        const { data, timestamp } = JSON.parse(cached);
+        // Cache valid for 1 day
+        if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+          setUserProfilePictures(data);
+          setProfilePicturesLoaded(true);
+          console.log("Using cached profile pictures");
+          return;
+        }
+      } catch (e) {
+        console.log("Cache invalid, fetching fresh...");
+      }
+    }
+    
+    fetchAllProfilePictures();
+  }, [currentUserId, profilePicturesLoaded]);
+
+  // CORRECT
   useEffect(() => {
     if (location.state?.selectedUser) {
       console.log(
@@ -79,20 +143,21 @@ export default function MessagesSection() {
     }
   }, [location.state, currentUserId]);
 
-  //  Fetch recent chats
+  // Fetch recent chats
   const fetchRecentChats = async () => {
     try {
       setRecentChatsLoading(true);
       const response = await chatApi.getRecentChats(currentUserId);
       setRecentChats(response.data);
 
-      //  AUTO-SELECT FIRST RECENT CHAT IF NO USER IS SELECTED
+      // AUTO-SELECT FIRST RECENT CHAT IF NO USER IS SELECTED
       if (response.data && response.data.length > 0 && !selectedUser) {
         const firstChat = response.data[0];
         const user = {
           id: firstChat.user_id,
           name: firstChat.name,
           email: firstChat.email,
+          profile_picture_url: firstChat.profile_picture_url
         };
         // Small delay to ensure state is set
         setTimeout(() => {
@@ -106,40 +171,36 @@ export default function MessagesSection() {
     }
   };
 
-  //  Handle recent chat selection
+  // Handle recent chat selection
   const handleRecentChatSelect = (chat) => {
     const user = {
       id: chat.user_id,
       name: chat.name,
       email: chat.email,
+      profile_picture_url: chat.profile_picture_url 
     };
     handleUserSelect(user);
     setShowSidebar(false);
   };
 
   // Add this function
-const formatNameWithSpace = (name) => {
-  if (!name) return "User";
-  
-  // Add space before capital letters (except first)
-  const formatted = name.replace(/([a-z])([A-Z])/g, '$1 $2');
-  
-  return formatted || name;
-};
+  const formatNameWithSpace = (name) => {
+    if (!name) return "User";
+    
+    // Add space before capital letters (except first)
+    const formatted = name.replace(/([a-z])([A-Z])/g, '$1 $2');
+    
+    return formatted || name;
+  };
 
-// Then use it like:
-<p className="font-medium text-gray-800 truncate text-sm">
-  {formatNameWithSpace(selectedUser?.name || "Unknown User")}
-</p>
-
-  //  RECENT CHATS USE EFFECT
+  // RECENT CHATS USE EFFECT
   useEffect(() => {
     if (currentUserId) {
       fetchRecentChats();
     }
   }, [currentUserId]);
 
-  //  Click outside to close reaction picker and delete option
+  // Click outside to close reaction picker and delete option
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -162,7 +223,7 @@ const formatNameWithSpace = (name) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [showReactionPicker, showDeleteOption]);
 
-  //  Get current user once
+  // Get current user once
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem("currentUser");
@@ -180,7 +241,7 @@ const formatNameWithSpace = (name) => {
     }
   }, []);
 
-  //  PLAN STATUS FETCH USEEFFECT
+  // PLAN STATUS FETCH USEEFFECT
   useEffect(() => {
     const fetchPlanStatus = async () => {
       try {
@@ -203,7 +264,7 @@ const formatNameWithSpace = (name) => {
     if (currentUserId) fetchPlanStatus();
   }, [currentUserId]);
 
-  //  Image Modal Effects
+  // Image Modal Effects
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
@@ -224,7 +285,7 @@ const formatNameWithSpace = (name) => {
     };
   }, [showImageModal]);
 
-  //  SOCKET WITH REACTION HANDLING
+  // SOCKET WITH REACTION HANDLING
   useEffect(() => {
     if (!currentUserId) return;
 
@@ -253,7 +314,7 @@ const formatNameWithSpace = (name) => {
       setSocketConnected(false);
     });
 
-    //  HANDLE NEW REACTIONS VIA SOCKET
+    // HANDLE NEW REACTIONS VIA SOCKET
     socket.on("new_reaction", (reactionData) => {
       console.log(" New reaction received via socket:", reactionData);
       if (reactionData && selectedUser) {
@@ -277,7 +338,7 @@ const formatNameWithSpace = (name) => {
       }
     });
 
-    //  Handle incoming messages
+    // Handle incoming messages
     const handleIncomingMessage = (message) => {
       console.log("📩 Socket message received:", message);
       fetchRecentChats();
@@ -315,21 +376,21 @@ const formatNameWithSpace = (name) => {
     };
   }, [currentUserId, selectedUser]);
 
-  //  Auto-scroll
+  // Auto-scroll
   useEffect(() => {
     if (messagesEndRef.current && messages.length > 0) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
-  //   FUNCTION TO REMOVE NUMBERS FROM USERNAME
+  // FUNCTION TO REMOVE NUMBERS FROM USERNAME
   const cleanUserName = (name) => {
     if (!name) return "User";
     // Remove numbers from the end of the username
     return name.replace(/\d+$/, "").trim() || name;
   }; 
 
-  //  Search users
+  // Search users
   const searchUsers = useCallback(
     async (query) => {
       if (!query.trim() || !currentUserId) return;
@@ -343,7 +404,6 @@ const formatNameWithSpace = (name) => {
             name: cleanUserName(
               user.name || user.email?.split("@")[0] || "User",
             ),
-            // Email field removed from display
           }));
         setUsers(filteredUsers);
       } catch (error) {
@@ -356,7 +416,7 @@ const formatNameWithSpace = (name) => {
     [currentUserId],
   );
 
-  //  LOAD MESSAGES
+  // LOAD MESSAGES
   const loadMessages = async (otherUserId) => {
     if (!currentUserId) return;
     try {
@@ -397,7 +457,7 @@ const formatNameWithSpace = (name) => {
     }
   };
 
-  //  LOAD REACTIONS PROPERLY
+  // LOAD REACTIONS PROPERLY
   const loadReactions = async (userId) => {
     if (!currentUserId || !userId) return;
     try {
@@ -424,7 +484,7 @@ const formatNameWithSpace = (name) => {
     }
   };
 
-  //  SELECT USER - WITH MOBILE SUPPORT
+  // SELECT USER - WITH MOBILE SUPPORT
   const handleUserSelect = async (user) => {
     if (!currentUserId) return;
 
@@ -433,6 +493,7 @@ const formatNameWithSpace = (name) => {
       id: user.id,
       name: cleanUserName(user.name || user.email?.split("@")[0] || "User"),
       email: user.email,
+      profile_picture_url: user.profile_picture_url 
     };
 
     setSelectedUser(selectedUserData);
@@ -445,14 +506,8 @@ const formatNameWithSpace = (name) => {
     await loadReactions(user.id);
   };
 
-  //  DELETE MESSAGE FUNCTION
+  // DELETE MESSAGE FUNCTION
   const handleDeleteMessage = async (messageId) => {
-    //  if (!plan.loading && !plan.active) {
-    // alert(
-    //   "Your subscription has expired. Please upgrade to use search features."
-    // );
-    // return;
-    // }
     if (!messageId || !currentUserId) {
       console.error("❌ Cannot delete: missing message ID or user ID");
       return;
@@ -489,7 +544,8 @@ const formatNameWithSpace = (name) => {
       setShowDeleteOption(null);
     }
   };
-  //  SEND MESSAGE
+
+  // SEND MESSAGE
   const handleSendMessage = async () => {
     // phale status check karega yha pr
     if (!planStatus.active) {
@@ -554,7 +610,7 @@ const formatNameWithSpace = (name) => {
       console.error("❌ Send failed:", error);
       setMessages((prev) => prev.filter((msg) => msg.id !== tempMsg.id));
 
-      // ✅ ADDED: message limit handling
+      //  ADDED: message limit handling
       if (
         error.response?.status === 403 &&
         error.response?.data?.code === "MESSAGE_LIMIT_EXCEEDED"
@@ -569,25 +625,7 @@ const formatNameWithSpace = (name) => {
     }
   };
 
-  //   //  SEND MESSAGE
-  // const handleSendMessage = async () => {
-  //   // phale status check karega yha pr
-  //   if (!planStatus.active) {
-  //     alert("Your plan has expired. Please upgrade to continue chatting.");
-  //     return;
-  //   }
-
-  //   if (!newMessage.trim() || !selectedUser || !currentUserId) return;
-
-  // //  ADD REACTION - PROPER REAL-TIME HANDLING
-  // const addReaction = async (messageId, emoji) => {
-  //   if (!currentUserId || !messageId) {
-  //     console.error("❌ Cannot add reaction: missing user ID or message ID");
-  //     return;
-  //   }
-
-  //  ADD REACTION - PROPER REAL-TIME HANDLING
-
+  // ADD REACTION - PROPER REAL-TIME HANDLING
   const addReaction = async (messageId, emoji) => {
     // 🔒 PLAN EXPIRED
     if (!planStatus.active) {
@@ -635,7 +673,7 @@ const formatNameWithSpace = (name) => {
     }
   };
 
-  //  GET REACTIONS FOR MESSAGE - SIMPLE AND WORKING
+  // GET REACTIONS FOR MESSAGE - SIMPLE AND WORKING
   const getMessageReactions = (messageId) => {
     if (!messageId) return [];
 
@@ -648,19 +686,14 @@ const formatNameWithSpace = (name) => {
     return messageReactions;
   };
 
-  //  RECONNECT SOCKET
+  // RECONNECT SOCKET
   const reconnectSocket = () => {
     if (socketRef.current) {
       socketRef.current.connect();
     }
   };
 
-  //  FILE UPLOAD
-  // const handleFileUpload = async (file) => {
-
-  //   if (!selectedUser || !currentUserId) return;
-
-  //  FILE UPLOAD
+  // FILE UPLOAD
   const handleFileUpload = async (file) => {
     // 🔒 PLAN EXPIRED
     if (!planStatus.active) {
@@ -720,7 +753,7 @@ const formatNameWithSpace = (name) => {
     e.target.value = "";
   };
 
-  //  SEARCH EFFECT
+  // SEARCH EFFECT
   useEffect(() => {
     if (searchTerm.trim() && currentUserId) {
       const timeoutId = setTimeout(() => {
@@ -732,7 +765,7 @@ const formatNameWithSpace = (name) => {
     }
   }, [searchTerm, searchUsers, currentUserId]);
 
-  //  ENTER KEY HANDLING
+  // ENTER KEY HANDLING
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -740,7 +773,7 @@ const formatNameWithSpace = (name) => {
     }
   };
 
-  //  FORMAT TIME
+  // FORMAT TIME
   const formatTime = (timestamp) => {
     if (!timestamp) return "";
     return new Date(timestamp).toLocaleTimeString("en-US", {
@@ -750,7 +783,7 @@ const formatNameWithSpace = (name) => {
     });
   };
 
-  //  RENDER ATTACHMENT
+  // RENDER ATTACHMENT
   const renderAttachment = (message) => {
     if (!message.attachment_url) return null;
 
@@ -795,6 +828,20 @@ const formatNameWithSpace = (name) => {
     );
   };
 
+  //  SIMPLE FUNCTION FOR GRADIENT COLOR
+  const getGradientColor = (name) => {
+    const nameChar = name?.charAt(0) || 'U';
+    const colors = [
+      'bg-gradient-to-br from-indigo-400 to-purple-500',
+      'bg-gradient-to-br from-green-400 to-blue-500',
+      'bg-gradient-to-br from-pink-400 to-red-500',
+      'bg-gradient-to-br from-yellow-400 to-orange-500',
+      'bg-gradient-to-br from-teal-400 to-cyan-500'
+    ];
+    const index = nameChar.charCodeAt(0) % colors.length;
+    return colors[index];
+  };
+
   // Show login message if no user
   if (!currentUserId) {
     return (
@@ -815,7 +862,7 @@ const formatNameWithSpace = (name) => {
     <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Messages</h2>
 
-      {/*  PLAN STATUS BANNER - TOP ME ADD KIYA HAI */}
+      {/* PLAN STATUS BANNER - TOP ME ADD KIYA HAI */}
       {!planStatus.loading && (
         <div
           className={`mb-4 p-3 text-sm text-center rounded-lg border ${
@@ -837,9 +884,9 @@ const formatNameWithSpace = (name) => {
         </div>
       )}
 
-      {/*  RESPONSIVE CHAT CONTAINER - HEIGHT REDUCED */}
+      {/* RESPONSIVE CHAT CONTAINER - HEIGHT REDUCED */}
       <div className="bg-white rounded-2xl shadow-lg h-[55vh] sm:h-[500px] flex flex-col md:flex-row border border-gray-200 relative">
-        {/* ✅ MOBILE HEADER FOR CHAT */}
+        {/*  MOBILE HEADER FOR CHAT */}
         {selectedUser && !showSidebar && (
           <div className="md:hidden p-4 border-b border-gray-200 bg-white flex items-center gap-3">
             <button
@@ -848,21 +895,47 @@ const formatNameWithSpace = (name) => {
             >
               ← Back
             </button>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                {selectedUser.name?.charAt(0)?.toUpperCase() || "U"}
-              </div>
-              <div>
-                <p className="font-medium text-gray-800 text-sm">
-                  {selectedUser.name}
-                </p>
-                <p className="text-xs text-gray-500">Online</p>
-              </div>
+            {/*  PROFILE PICTURE WITH FALLBACK */}
+            {selectedUser.profile_picture_url ? (
+              <img 
+                src={selectedUser.profile_picture_url} 
+                alt={selectedUser.name}
+                className="w-8 h-8 rounded-full object-cover border-2 border-white shadow"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentElement.querySelector('.mobile-fallback-avatar').style.display = 'flex';
+                }}
+              />
+            ) : userProfilePictures[selectedUser.id] ? (
+              <img 
+                src={userProfilePictures[selectedUser.id]} 
+                alt={selectedUser.name}
+                className="w-8 h-8 rounded-full object-cover border-2 border-white shadow"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentElement.querySelector('.mobile-fallback-avatar').style.display = 'flex';
+                }}
+              />
+            ) : null}
+            
+            <div 
+              className={`mobile-fallback-avatar w-8 h-8 ${getGradientColor(selectedUser.name)} rounded-full flex items-center justify-center text-white font-bold text-sm ${
+                (selectedUser.profile_picture_url || userProfilePictures[selectedUser.id]) ? 'hidden' : 'flex'
+              }`}
+            >
+              {selectedUser.name?.charAt(0)?.toUpperCase() || "U"}
+            </div>
+            
+            <div>
+              <p className="font-medium text-gray-800 text-sm">
+                {selectedUser.name}
+              </p>
+              <p className="text-xs text-gray-500">Online</p>
             </div>
           </div>
         )}
 
-        {/*  SIDEBAR - Responsive */}
+        {/* SIDEBAR - Responsive */}
         <div
           className={`
           ${showSidebar ? "flex" : "hidden"} 
@@ -894,7 +967,7 @@ const formatNameWithSpace = (name) => {
             </div>
           </div>
 
-          {/*  RECENT CHATS SECTION - RESPONSIVE */}
+          {/* RECENT CHATS SECTION - RESPONSIVE */}
           <div className="border-b border-gray-200">
             <div className="px-4 py-3 bg-gray-50">
               <h3 className="text-sm font-medium text-gray-700">
@@ -923,10 +996,37 @@ const formatNameWithSpace = (name) => {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-xs">
-                        {cleanUserName(chat.name)?.charAt(0)?.toUpperCase() ||
-                          "U"}
+                      {/* ✅ PROFILE PICTURE WITH FALLBACK */}
+                      {chat.profile_picture_url ? (
+                        <img 
+                          src={chat.profile_picture_url} 
+                          alt={chat.name}
+                          className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.parentElement.querySelector('.chat-fallback-avatar').style.display = 'flex';
+                          }}
+                        />
+                      ) : userProfilePictures[chat.user_id] ? (
+                        <img 
+                          src={userProfilePictures[chat.user_id]} 
+                          alt={chat.name}
+                          className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.parentElement.querySelector('.chat-fallback-avatar').style.display = 'flex';
+                          }}
+                        />
+                      ) : null}
+                      
+                      <div 
+                        className={`chat-fallback-avatar w-10 h-10 ${getGradientColor(chat.name)} rounded-full flex items-center justify-center text-white font-bold text-sm ${
+                          (chat.profile_picture_url || userProfilePictures[chat.user_id]) ? 'hidden' : 'flex'
+                        }`}
+                      >
+                        {cleanUserName(chat.name)?.charAt(0)?.toUpperCase() || "U"}
                       </div>
+                      
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-center">
                           <p className="font-medium text-gray-800 truncate text-sm">
@@ -979,14 +1079,41 @@ const formatNameWithSpace = (name) => {
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-base">
+                    {/*  PROFILE PICTURE WITH FALLBACK */}
+                    {user.profile_picture_url ? (
+                      <img 
+                        src={user.profile_picture_url} 
+                        alt={user.name}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-white shadow"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.querySelector('.user-fallback-avatar').style.display = 'flex';
+                        }}
+                      />
+                    ) : userProfilePictures[user.id] ? (
+                      <img 
+                        src={userProfilePictures[user.id]} 
+                        alt={user.name}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-white shadow"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.querySelector('.user-fallback-avatar').style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    
+                    <div 
+                      className={`user-fallback-avatar w-12 h-12 ${getGradientColor(user.name)} rounded-full flex items-center justify-center text-white font-bold ${
+                        (user.profile_picture_url || userProfilePictures[user.id]) ? 'hidden' : 'flex'
+                      }`}
+                    >
                       {user.name?.charAt(0)?.toUpperCase() || "U"}
                     </div>
+                    
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-800 truncate text-sm sm:text-base">
+                      <p className="font-medium text-gray-800 truncate">
                         {user.name}
                       </p>
-                      {/* Email removed from display */}
                     </div>
                   </div>
                 </div>
@@ -995,22 +1122,47 @@ const formatNameWithSpace = (name) => {
           </div>
         </div>
 
-        {/*  CHAT AREA - Responsive with reduced height */}
+        {/* CHAT AREA - Responsive with reduced height */}
         <div className="flex-1 flex flex-col">
           {selectedUser ? (
             <>
-              {/* Desktop Header */}
-              <div className="hidden md:flex p-4 border-b border-gray-200 bg-white">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold">
-                    {selectedUser.name?.charAt(0)?.toUpperCase() || "U"}
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">
-                      {selectedUser.name}
-                    </p>
-                    {/* Email line removed */}
-                  </div>
+              {/*  Desktop Header with Profile Picture */}
+              <div className="hidden md:flex p-4 border-b border-gray-200 bg-white items-center gap-3">
+                {/*  PROFILE PICTURE WITH FALLBACK */}
+                {selectedUser.profile_picture_url ? (
+                  <img 
+                    src={selectedUser.profile_picture_url} 
+                    alt={selectedUser.name}
+                    className="w-10 h-10 rounded-full object-cover border-2 border-white shadow"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.querySelector('.desktop-fallback-avatar').style.display = 'flex';
+                    }}
+                  />
+                ) : userProfilePictures[selectedUser.id] ? (
+                  <img 
+                    src={userProfilePictures[selectedUser.id]} 
+                    alt={selectedUser.name}
+                    className="w-10 h-10 rounded-full object-cover border-2 border-white shadow"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.querySelector('.desktop-fallback-avatar').style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                
+                <div 
+                  className={`desktop-fallback-avatar w-10 h-10 ${getGradientColor(selectedUser.name)} rounded-full flex items-center justify-center text-white font-bold ${
+                    (selectedUser.profile_picture_url || userProfilePictures[selectedUser.id]) ? 'hidden' : 'flex'
+                  }`}
+                >
+                  {selectedUser.name?.charAt(0)?.toUpperCase() || "U"}
+                </div>
+                
+                <div>
+                  <p className="font-medium text-gray-800">
+                    {selectedUser.name}
+                  </p>
                 </div>
               </div>
 
@@ -1147,7 +1299,7 @@ const formatNameWithSpace = (name) => {
                               😊
                             </button>
                           </div>
-                          {/*  REACTIONS DISPLAY */}
+                          {/* REACTIONS DISPLAY */}
                           <div className="flex flex-wrap gap-1 mt-2">
                             {getMessageReactions(message.id).map(
                               (reaction, index) => (
@@ -1197,7 +1349,7 @@ const formatNameWithSpace = (name) => {
                 <div className="flex gap-2">
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    disabled={fileUploading || !planStatus.active} //  यहाँ change
+                    disabled={fileUploading || !planStatus.active}
                     className="px-3 py-2 sm:px-4 sm:py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 disabled:opacity-50 text-sm"
                   >
                     {fileUploading ? "📤" : "📎"}
@@ -1210,19 +1362,6 @@ const formatNameWithSpace = (name) => {
                     accept="*/*"
                   />
 
-                  {/* <input
-                    type="text"
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder={
-                      planStatus.active
-                        ? `Message ${selectedUser.name}...`
-                        : "Upgrade plan to send messages..."
-                    }
-                    onKeyPress={handleKeyPress}
-                    className="flex-1 px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm sm:text-base"
-                    disabled={!planStatus.active}
-                  /> */}
                   <input
                     type="text"
                     value={newMessage}
@@ -1331,3 +1470,32 @@ const formatNameWithSpace = (name) => {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

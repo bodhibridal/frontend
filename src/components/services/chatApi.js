@@ -1,3 +1,5 @@
+
+
 import axios from "axios";
 
 const API_BASE_URL =
@@ -63,6 +65,16 @@ export const chatApi = {
     });
   },
 
+  
+  //  // NOTIFICATION APIS ADDED
+  // getUserNotifications: (userId) => 
+  //   api.get(`/api/notifications/${userId}`),
+  
+  // markNotificationAsRead: (notificationId) => 
+  //   api.put(`/api/notifications/read/${notificationId}`),
+
+
+
   // Add reaction to message
   addReaction: (reactionData) => {
     return api.post("/api/reactions", reactionData);
@@ -75,7 +87,7 @@ export const chatApi = {
 
   markChatAsRead: (notificationId) => {
     return api.put(`/api/notifications/read/${notificationId}`);
-  },
+  }, 
 
   // Get user notifications
   getUserNotifications: (userId) => {
@@ -85,7 +97,7 @@ export const chatApi = {
   // Mark all notifications as read
   markAllNotificationsAsRead: (userId) => {
     return api.put(`/api/notifications/read/messages/${userId}`);
-  },
+  }, 
 
   // DELETE MESSAGE API
   deleteMessage: async (messageId) => {
@@ -106,6 +118,14 @@ export const chatApi = {
     );
     return response;
   },
+
+  //   getUserNotifications: (userId) => {
+  //   return api.get(`/api/notifications/${userId}`);
+  // },
+  
+  // markNotificationAsRead: (notificationId) => {
+  //   return api.put(`/api/notifications/read/${notificationId}`);
+  // },
 };
 
 
@@ -133,17 +153,6 @@ export const getSuggestedMatches = async () => {
 };
 
 export default api;
-
-
-
-
-
-
-
-
-
-
-
 
 
 
