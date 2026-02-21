@@ -257,8 +257,9 @@ function Header() {
               </>
             ) : (
               <div className="flex items-center gap-3">
+                <h1></h1>
                 {/* FIXED: Original login links preserved */}
-                <Link
+                 <Link
                   to="/login"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200 px-3 py-1"
                 >
@@ -280,7 +281,9 @@ function Header() {
                 </Link>
               </div>
             )}
-          </div>
+          </div> 
+
+
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-4">
