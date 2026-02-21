@@ -70,7 +70,7 @@ const PublicRoute = ({ children }) => {
 // Main Layout Component
 const MainLayout = ({ children }) => (
   <div className="flex flex-col min-h-screen">
-    <Header />
+    <Header/>
     <main className="flex-grow">{children}</main>
     <Footer />
   </div>
@@ -220,9 +220,7 @@ export default function App() {
         <Route
           path="/"
           element={
-            <MainLayout>
-              <Home />
-            </MainLayout>
+              <Home/>
           }
         />
         <Route
