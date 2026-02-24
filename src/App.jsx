@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { UserProfileProvider } from "./components/context/UseProfileContext";
@@ -34,7 +33,7 @@ import ArticleDetails from "./components/pages/ArticleDetails";
 import EditArticle from "./components/pages/EditArticle";
 import { ToastContainer } from "react-toastify";
 import ProfileViews from "./components/pages/ProfileViews";
-import About from "./components/pages/AboutPage";
+//import About from "./components/pages/AboutPage";
 import FallbackPage from "./components/pages/FallbackPage";
 import FacebookPage from "./components/social/FacebookPage";
 import LinkedInPage from "./components/social/LinkedinPage";
@@ -54,6 +53,8 @@ import NotRenewedUsers from "./components/pages/NotRenewedUsers";
 import LinkedInCallback from "./components/social/LinkedInCallback";
 import AdminModelDetails from "./components/admin/AdminModelDetails";
 import ResetPassword from "./components/pages/ResetPassword";
+import About from "./components/pages/About";
+import Careers from "./components/pages/Career";
 
 // Protected Route Component (For regular users)
 const UserProtectedRoute = ({ children }) => {
@@ -70,7 +71,7 @@ const PublicRoute = ({ children }) => {
 // Main Layout Component
 const MainLayout = ({ children }) => (
   <div className="flex flex-col min-h-screen">
-    <Header/>
+    <Header />
     <main className="flex-grow">{children}</main>
     <Footer />
   </div>
@@ -108,7 +109,7 @@ export default function App() {
           path="/admin-dashboard"
           element={<Navigate to="/admin" replace />}
         />
-{/* 
+        {/* 
 {/* Redirects - }
 <Route path="/admin-reports" element={<Navigate to="/admin/reports" replace />} />
 <Route path="/admin/users/:type" element={<Navigate to="/admin/users/:type" replace />} />
@@ -123,7 +124,7 @@ export default function App() {
     */}
 
         {/* Old admin routes - keep for backward compatibility */}
-       <Route
+        <Route
           path="/admin-reports"
           element={
             <ProtectedRoute>
@@ -162,19 +163,19 @@ export default function App() {
               <NotRenewedUsers />
             </ProtectedRoute>
           }
-        /> 
+        />
 
         {/* User Details Route - IMPORTANT: Change path */}
-         <Route
+        <Route
           path="/admin/users/:userId"
           element={
             <ProtectedRoute>
               <AdminModelDetails />
             </ProtectedRoute>
           }
-        /> 
+        />
 
-         <Route
+        <Route
           path="/admin/models/:userId"
           element={
             <ProtectedRoute>
@@ -190,7 +191,7 @@ export default function App() {
               <AdminModelDetails />
             </ProtectedRoute>
           }
-        /> 
+        />
 
         {/* payment result routes */}
         <Route
@@ -209,20 +210,18 @@ export default function App() {
             </MainLayout>
           }
         />
+          <Route path="/careers" element={<Careers />} />
+         <Route path="/about" element={<About />} />
+        
         <Route path="/auth/linkedin/callback" element={<LinkedInCallback />} />
- 
+
         <Route path="/admin-plans-new" element={<PlanFormWrapper />} />
         <Route path="/admin/blogs/create" element={<CreateArticle />} />
         <Route path="/admin/blogs/edit/:id" element={<EditArticle />} />
         <Route path="/blogs/:id" element={<ArticleDetails />} />
 
         {/* Public Routes WITH Header & Footer */}
-        <Route
-          path="/"
-          element={
-              <Home/>
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route
           path="/login"
           element={
@@ -332,14 +331,14 @@ export default function App() {
             </MainLayout>
           }
         />
-        <Route
+        {/* <Route
           path="/about"
           element={
             <MainLayout>
               <About />
             </MainLayout>
           }
-        />
+        /> */}
         <Route
           path="/blog"
           element={
@@ -476,69 +475,3 @@ export default function App() {
     </UserProfileProvider>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

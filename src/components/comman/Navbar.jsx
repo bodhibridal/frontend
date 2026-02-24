@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import logo from "../../assets/images/New-Logo-2.png";
 import logo from "../../assets/New-Logo-2.png";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +23,8 @@ const Navbar = () => {
         {/* Center Section - Desktop Menu */}
         <ul className="hidden lg:flex gap-8 text-gray-700 font-medium">
           <li><Link to="/" className="hover:text-red-600">Home</Link></li>
-          <li><Link to="/member" className="hover:text-red-600">Member</Link></li>
+          <li><Link to="/about" className="hover:text-red-600">About Us</Link></li>
+         <li><Link to="/member" className="hover:text-red-600">Member</Link></li>
           <li><Link to="/profile" className="hover:text-red-600">Profile</Link></li>
           <li><Link to="/user-story" className="hover:text-red-600">User Story</Link></li>
           <li><Link to="/testimonial" className="hover:text-red-600">Testimonial</Link></li>
@@ -56,6 +56,7 @@ const Navbar = () => {
         <div className="lg:hidden bg-white shadow-md">
           <ul className="flex flex-col gap-4 px-6 py-4 text-gray-700 font-medium">
             <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
+            <li><Link to="/about" onClick={() => setIsOpen(false)}>About Us</Link></li>
             <li><Link to="/member" onClick={() => setIsOpen(false)}>Member</Link></li>
             <li><Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link></li>
             <li><Link to="/user-story" onClick={() => setIsOpen(false)}>User Story</Link></li>

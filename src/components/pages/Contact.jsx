@@ -157,7 +157,7 @@ const ContactPage = () => {
                   </svg>
                 </div>
                 <h3 className="font-semibold text-gray-800 mb-2">Call Us</h3>
-                <p className="text-gray-600">+44-07748697601</p>
+                <p className="text-gray-600">9302123255</p>
                 <p className="text-sm text-gray-500 mt-1">Mon-Fri from 9am to 6pm</p>
               </div>
 
@@ -168,7 +168,7 @@ const ContactPage = () => {
                   </svg>
                 </div>
                 <h3 className="font-semibold text-gray-800 mb-2">Email Us</h3>
-                <p className="text-gray-600">info@neratech.com</p>
+                <p className="text-gray-600">info@bodhibridal.in</p>
                 <p className="text-sm text-gray-500 mt-1">We'll reply within 24 hours</p>
               </div>
             </div>
@@ -185,9 +185,9 @@ const ContactPage = () => {
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-2">Visit Our Office</h3>
                   <p className="text-gray-600">
-                    123 Dating Street<br />
-                    Suite 100<br />
-                    Uk
+                    BODHI BRIDAL MATRIMONIAL SOLUTION<br />
+                    151/227 Suyash Vihar<br />
+                    Nanda Nagar Indore
                   </p>
                 </div>
               </div>
