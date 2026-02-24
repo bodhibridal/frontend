@@ -1,5 +1,5 @@
 import React from 'react'
-import DemoRibbon from '../comman/DemoRibbon'
+//import DemoRibbon from '../comman/DemoRibbon'
 import Navbar from '../comman/Navbar'
 import Heroo from '../home/Heroo'
 // import DemoRibbon from '../Components/common/DemoRibbon'
@@ -19,7 +19,6 @@ import NewFoooter from "../home/NewFoooter"
 const Home = () => {
   return (
     <>
-      <DemoRibbon/>
       <Navbar/>
       <Heroo/>
       <Welcome/>
