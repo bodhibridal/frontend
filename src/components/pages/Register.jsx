@@ -89,8 +89,8 @@ export default function Register() {
         {/* Header - HOME PAGE STYLE */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-extrabold">
-            <span className="text-blue-700">Intentional</span>
-            <span className="text-pink-500"> Connections</span>
+            <span className="text-orange-500">BodhiBridal</span>
+            <span className="text-red-500"> Matrimony</span>
           </h1>
           <p className="text-gray-600 mt-2">
             Create your account and start your journey
@@ -210,13 +210,25 @@ export default function Register() {
           </div>
 
           {/* BLUE BUTTON like home page */}
-          <button
+          {/* <button
             type="submit"
             disabled={loading}
             className={`w-full py-3 mt-4 font-bold text-white rounded-lg shadow-md transition duration-200 ${
               loading
                 ? "bg-blue-600 cursor-not-allowed opacity-90"
                 : "bg-blue-600 hover:bg-blue-700 hover:shadow-lg"
+            }`}
+          >
+            {loading ? "Creating Account..." : "Create Account"}
+          </button> */}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 mt-4 font-bold text-white rounded-lg shadow-md transition duration-200 ${
+              loading
+                ? "bg-orange-400 cursor-not-allowed opacity-80"
+                : "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 hover:shadow-lg"
             }`}
           >
             {loading ? "Creating Account..." : "Create Account"}
@@ -233,7 +245,7 @@ export default function Register() {
                 localStorage.removeItem("accessToken");
                 localStorage.removeItem("refreshToken");
               }}
-              className="font-bold text-blue-600 hover:text-blue-800 hover:underline"
+              className="font-bold text-orange-600 hover:text-red-600 hover:underline"
             >
               Login
             </Link>
@@ -243,11 +255,3 @@ export default function Register() {
     </div>
   );
 }
-
-
-
-
-
-
-
-

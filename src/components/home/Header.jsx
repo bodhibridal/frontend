@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUserProfile } from "../context/UseProfileContext";
 import NotificationBell from "../notifybell/NotificationBell";
 
-import bglogo from "../../assets/alternate.png";
+//import bglogo from "../../assets/alternate.png";
+import NewLogo2 from "../../assets/New-Logo-2.png";
 import { FaLinkedin, FaFacebook, FaTwitter } from "react-icons/fa";
 
 // Main Header Component
@@ -121,9 +122,9 @@ function Header() {
           <div className="flex items-center z-50">
             <Link to="/" className="">
               <img
-                src={bglogo}
+                 src={NewLogo2}
                 alt="Logo"
-                className="h-5 object-contain"
+                className="h-12 object-contain"
               />
             </Link>
           </div>
@@ -131,24 +132,24 @@ function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex flex-1 justify-center">
             <ul className="flex gap-8">
-              <li>
+              {/* <li>
                 <Link
                   to="/"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
                 >
                   Home
                 </Link>
-              </li>
+              </li> */}
 
               {/* ADDED: About Us Link */}
-              <li>
+              {/* <li>
                 <Link
                   to="/about"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
                 >
                   About Us
                 </Link>
-              </li>
+              </li> */}
 
               {/* FIXED: Original navigation links preserved */}
               {isLoggedIn && (
@@ -180,23 +181,23 @@ function Header() {
                 </>
               )}
 
-              <li>
+              {/* <li>
                 <Link
                   to="/contact"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
                 >
                   Contact Us
                 </Link>
-              </li>
+              </li> */}
 
-              <li>
+              {/* <li>
                 <Link
                   to="/blog"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
                 >
                   Blogs
                 </Link>
-              </li>
+              </li> */}
               {/* 
               {/* Social Links /}
               <li className="flex items-center gap-4 ml-4">
@@ -275,7 +276,7 @@ function Header() {
 
                 <Link
                   to="/register"
-                  className="bg-[#727bf1] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#041cfa] transition-all duration-200"
+                  className=" bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold  transition-all duration-200"
                 >
                   Register 
                 </Link>

@@ -210,8 +210,10 @@ export default function App() {
             </MainLayout>
           }
         />
+                   
           <Route path="/careers" element={<Careers />} />
          <Route path="/about" element={<About />} />
+           <Route path="/contact" element={<Contact />} />
         
         <Route path="/auth/linkedin/callback" element={<LinkedInCallback />} />
 
@@ -326,9 +328,9 @@ export default function App() {
         <Route
           path="/contact"
           element={
-            <MainLayout>
+          //  <MainLayout>
               <Contact />
-            </MainLayout>
+          // </MainLayout>
           }
         />
         {/* <Route
@@ -342,9 +344,9 @@ export default function App() {
         <Route
           path="/blog"
           element={
-            <MainLayout>
+           // <MainLayout>
               <BlogPage />
-            </MainLayout>
+           // </MainLayout>
           }
         />
 

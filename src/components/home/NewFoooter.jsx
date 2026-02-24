@@ -10,7 +10,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-red-400 text-white">
+    <footer className="bg-gradient-to-r from-orange-500 to-red-500 text-white">
       {/* Upper Section */}
       <div className="max-w-7xl mx-auto px-4 py-18 pb-25">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
@@ -47,16 +47,16 @@ const Footer = () => {
               <li className="flex gap-3">
                 <MapPin size={20} />
                 <span>
-                  Sunset Lake Road Suite B-2, Newark, Delaware - 19702, USA
+                  BODHI BRIDAL MATRIMONIAL SOLUTION 151/227 Suyash Vihar, Nanda Nagar Indore, Madhya Pradesh 452001
                 </span>
               </li>
               <li className="flex gap-3">
                 <Mail size={20} />
-                <span>presale@wpdating.com</span>
+                <span>info@bodhibridal.in</span>
               </li>
               <li className="flex gap-3">
                 <Phone size={20} />
-                <span>+1 217 650 3177</span>
+                <span>9302123255</span>
               </li>
             </ul>
           </div>
@@ -89,7 +89,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto border-t border-white">
         <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
           <p className="text-lg">
-            Copyright © 2026 WP Matrimony. All rights reserved.
+            Copyright © 2026 BodhiBridal Matrimony. All rights reserved.
           </p>
 
           <div className="flex gap-6 text-lg">
@@ -105,7 +105,7 @@ const Footer = () => {
 
 const SocialIcon = ({ icon }) => {
   return (
-    <div className="w-10 h-10 flex items-center justify-center rounded-full border border-white bg-red-400 hover:bg-white hover:text-red-500 transition cursor-pointer">
+    <div className="w-10 h-10 flex items-center justify-center rounded-full border border-white bg-gradient-to-r from-orange-500 to-red-500 hover:bg-white hover:text-red-500 transition cursor-pointer">
       {icon}
     </div>
   );
