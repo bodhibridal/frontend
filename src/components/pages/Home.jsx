@@ -15,6 +15,7 @@ import Stories from '../home/Stories'
 import Testimonials from '../home/Testimonials' 
 import NewFoooter from "../home/NewFoooter"
 
+
 const Home = () => {
   return (
     <>
