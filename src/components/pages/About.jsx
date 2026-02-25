@@ -756,7 +756,7 @@ function About() {
                   />
                 </div>
 
-                {/* Content - Basic Info Only */}
+               
                 <div className="p-6">
                   {/* Name */}
                   <h3 className="text-2xl font-bold text-gray-800 mb-1">

@@ -55,6 +55,7 @@ import AdminModelDetails from "./components/admin/AdminModelDetails";
 import ResetPassword from "./components/pages/ResetPassword";
 import About from "./components/pages/About";
 import Careers from "./components/pages/Career";
+import BuddhVihar from "./components/pages/BuddhVihar";
 
 // Protected Route Component (For regular users)
 const UserProtectedRoute = ({ children }) => {
@@ -214,6 +215,7 @@ export default function App() {
           <Route path="/careers" element={<Careers />} />
          <Route path="/about" element={<About />} />
            <Route path="/contact" element={<Contact />} />
+           <Route path="/BuddhVihar" element={<BuddhVihar />} />
         
         <Route path="/auth/linkedin/callback" element={<LinkedInCallback />} />
 
