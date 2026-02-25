@@ -5,7 +5,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="w-full bg-white shadow-md  top-0 left-0 z-50">
+    //<header className="w-full bg-white shadow-md  top-0 left-0 z-50">
+      <header className="sticky top-0 w-full bg-white shadow-md z-50">
       <nav className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         
         {/* Left Section - Logo */}
@@ -28,6 +29,7 @@ const Navbar = () => {
           <li><Link to="/profile" className="hover:text-red-600">Profile</Link></li>
           <li><Link to="/user-story" className="hover:text-red-600">User Story</Link></li>
           <li><Link to="/testimonial" className="hover:text-red-600">Testimonial</Link></li>
+          <li><Link to="/buddhvihar" className="hover:text-red-600">BuddhVihar</Link></li>
           <li><Link to="/contact" className="hover:text-red-600">Contact Us</Link></li>
         </ul>
 
@@ -61,6 +63,7 @@ const Navbar = () => {
             <li><Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link></li>
             <li><Link to="/user-story" onClick={() => setIsOpen(false)}>User Story</Link></li>
             <li><Link to="/testimonial" onClick={() => setIsOpen(false)}>Testimonial</Link></li>
+            <li><Link to="/buddhvihar" onClick={() => setIsOpen(false)}>BuddhVihar</Link></li>
             <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact Us</Link></li>
 
             <Link
