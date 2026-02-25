@@ -1,21 +1,4 @@
-// import React from 'react';
-// import Navbar from "../components/common/Navbar";
-// import Footer from "../components/common/Footer";
-// import thikse from "../assets/images/thikse.jpg";
-// import phugtal from "../assets/images/phugtal.jpg";
-// import bugan from "../assets/images/bugan.jpg";
-// import kopan from "../assets/images/kopan.jpg";
-// import ki from "../assets/images/ki.jpg";
-// import taksang from '../assets/images/taksang.jpg';
-// import xuan from "../assets/images/xuan.jpg";
-// import taung from "../assets/images/taung.jpg";
-// import punakha from "../assets/images/punakha.jpg";
-// import wat from "../assets/images/wat.jpg";
-
-
 import React from 'react';
-// import Navbar from "../comman/Navbar";
-// import Footer from "../comman/Footer";
 import thikse from "../../assets/thikse.jpg";
 import phugtal from "../../assets/phugtal.jpg";
 import bugan from "../../assets/bugan.jpg";
