@@ -33,7 +33,7 @@ const FindPartner = () => {
 
             <p className="text-gray-600 mb-8 leading-relaxed">
               The time has never been better – get started on finding someone
-              worth keeping around by joining this amazing new community at WP
+              worth keeping around by joining this amazing new community at BodhiBridal
               Matrimony right away!!
             </p>
 

@@ -38,11 +38,11 @@ import FallbackPage from "./components/pages/FallbackPage";
 import FacebookPage from "./components/social/FacebookPage";
 import LinkedInPage from "./components/social/LinkedinPage";
 import TwitterPage from "./components/social/TwitterPage";
-import PrivacyPolicy from "./components/social/PrivacyPolicy";
+//import PrivacyPolicy from "./components/social/PrivacyPolicy";
 import Accessibility from "./components/social/Accessibility";
 import Imprint from "./components/social/Imprint";
 import OnlineDating from "./components/social/OnlineDating";
-import TermsAndConditions from "./components/social/TermsAndConditions";
+//import TermsAndConditions from "./components/social/TermsAndConditions";
 import Securety from "./components/social/Securety";
 import LifeRhythmsForm from "./components/profiles/LifeRhythmsForm";
 import AdminReport from "./components/pages/AdminReport";
@@ -56,6 +56,9 @@ import ResetPassword from "./components/pages/ResetPassword";
 import About from "./components/pages/About";
 import Careers from "./components/pages/Career";
 import BuddhVihar from "./components/pages/BuddhVihar";
+import FAQ from "./components/pages/FAQ";
+import PrivacyPolicy from "./components/pages/PrivacyPolicy";
+import TermsAndConditions from "./components/pages/TermsAndConditions";
 
 // Protected Route Component (For regular users)
 const UserProtectedRoute = ({ children }) => {
@@ -211,12 +214,15 @@ export default function App() {
             </MainLayout>
           }
         />
-                   
-          <Route path="/careers" element={<Careers />} />
-         <Route path="/about" element={<About />} />
-           <Route path="/contact" element={<Contact />} />
-           <Route path="/BuddhVihar" element={<BuddhVihar />} />
-        
+
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/BuddhVihar" element={<BuddhVihar />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+
         <Route path="/auth/linkedin/callback" element={<LinkedInCallback />} />
 
         <Route path="/admin-plans-new" element={<PlanFormWrapper />} />
@@ -330,9 +336,9 @@ export default function App() {
         <Route
           path="/contact"
           element={
-          //  <MainLayout>
-              <Contact />
-          // </MainLayout>
+            //  <MainLayout>
+            <Contact />
+            // </MainLayout>
           }
         />
         {/* <Route
@@ -346,9 +352,9 @@ export default function App() {
         <Route
           path="/blog"
           element={
-           // <MainLayout>
-              <BlogPage />
-           // </MainLayout>
+            // <MainLayout>
+            <BlogPage />
+            // </MainLayout>
           }
         />
 
