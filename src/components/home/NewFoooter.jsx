@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Facebook,
   Twitter,
@@ -93,9 +94,15 @@ const Footer = () => {
           </p>
 
           <div className="flex gap-6 text-lg">
-            <span className="hover:underline cursor-pointer">FAQ</span>
-            <span className="hover:underline cursor-pointer">Privacy Policy</span>
-            <span className="hover:underline cursor-pointer">Terms & Conditions</span>
+            <Link to="/faq" className="hover:underline cursor-pointer">
+              FAQ
+            </Link>
+            <Link to="/privacy-policy" className="hover:underline cursor-pointer">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-and-conditions" className="hover:underline cursor-pointer">
+              Terms & Conditions
+            </Link>
           </div>
         </div>
       </div>
