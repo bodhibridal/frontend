@@ -132,24 +132,24 @@ function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex flex-1 justify-center">
             <ul className="flex gap-8">
-              {/* <li>
+              <li>
                 <Link
                   to="/"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
                 >
                   Home
                 </Link>
-              </li> */}
+              </li>
 
               {/* ADDED: About Us Link */}
-              {/* <li>
+              <li>
                 <Link
                   to="/about"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
                 >
                   About Us
                 </Link>
-              </li> */}
+              </li>
 
               {/* FIXED: Original navigation links preserved */}
               {isLoggedIn && (
@@ -181,14 +181,22 @@ function Header() {
                 </>
               )}
 
-              {/* <li>
+              <li>
                 <Link
                   to="/contact"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
                 >
                   Contact Us
                 </Link>
-              </li> */}
+              </li>
+                    <li>
+                <Link
+                  to="/buddhvihar"
+                  className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
+                >
+                  BuddhVihar
+                </Link>
+              </li>
 
               {/* <li>
                 <Link

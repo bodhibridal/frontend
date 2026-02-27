@@ -25,10 +25,10 @@ const Navbar = () => {
         <ul className="hidden lg:flex gap-8 text-gray-700 font-medium">
           <li><Link to="/" className="hover:text-red-600">Home</Link></li>
           <li><Link to="/about" className="hover:text-red-600">About Us</Link></li>
-         <li><Link to="/member" className="hover:text-red-600">Member</Link></li>
-          <li><Link to="/profile" className="hover:text-red-600">Profile</Link></li>
-          <li><Link to="/user-story" className="hover:text-red-600">User Story</Link></li>
-          <li><Link to="/testimonial" className="hover:text-red-600">Testimonial</Link></li>
+         {/* <li><Link to="/member" className="hover:text-red-600">Member</Link></li>
+          <li><Link to="/profile" className="hover:text-red-600">Profile</Link></li> */}
+          {/* <li><Link to="/user-story" className="hover:text-red-600">User Story</Link></li> */}
+          {/* <li><Link to="/testimonial" className="hover:text-red-600">Testimonial</Link></li> */}
           <li><Link to="/buddhvihar" className="hover:text-red-600">BuddhVihar</Link></li>
           <li><Link to="/contact" className="hover:text-red-600">Contact Us</Link></li>
         </ul>
@@ -59,10 +59,10 @@ const Navbar = () => {
           <ul className="flex flex-col gap-4 px-6 py-4 text-gray-700 font-medium">
             <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
             <li><Link to="/about" onClick={() => setIsOpen(false)}>About Us</Link></li>
-            <li><Link to="/member" onClick={() => setIsOpen(false)}>Member</Link></li>
-            <li><Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link></li>
-            <li><Link to="/user-story" onClick={() => setIsOpen(false)}>User Story</Link></li>
-            <li><Link to="/testimonial" onClick={() => setIsOpen(false)}>Testimonial</Link></li>
+            {/* <li><Link to="/member" onClick={() => setIsOpen(false)}>Member</Link></li> */}
+            {/* <li><Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link></li> */}
+            {/* <li><Link to="/user-story" onClick={() => setIsOpen(false)}>User Story</Link></li> */}
+            {/* <li><Link to="/testimonial" onClick={() => setIsOpen(false)}>Testimonial</Link></li> */}
             <li><Link to="/buddhvihar" onClick={() => setIsOpen(false)}>BuddhVihar</Link></li>
             <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact Us</Link></li>
 
