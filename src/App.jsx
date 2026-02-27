@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { UserProfileProvider } from "./components/context/UseProfileContext";
 import Header from "./components/home/Header";
-import Footer from "./components/home/Footer";
+//import Footer from "./components/home/Footer";
 
 // Import your new AdminDashboard component (the one I just modified)
 // import AdminDashboard from "./components/admin/AdminDashboard";
@@ -59,6 +59,7 @@ import BuddhVihar from "./components/pages/BuddhVihar";
 import FAQ from "./components/pages/FAQ";
 import PrivacyPolicy from "./components/pages/PrivacyPolicy";
 import TermsAndConditions from "./components/pages/TermsAndConditions";
+import NewFoooter from "./components/home/NewFoooter";
 
 // Protected Route Component (For regular users)
 const UserProtectedRoute = ({ children }) => {
@@ -77,7 +78,8 @@ const MainLayout = ({ children }) => (
   <div className="flex flex-col min-h-screen">
     <Header />
     <main className="flex-grow">{children}</main>
-    <Footer />
+    {/* <Footer /> */}
+    <NewFoooter />
   </div>
 );
 
@@ -336,9 +338,9 @@ export default function App() {
         <Route
           path="/contact"
           element={
-            //  <MainLayout>
+              <MainLayout>
             <Contact />
-            // </MainLayout>
+             </MainLayout>
           }
         />
         {/* <Route

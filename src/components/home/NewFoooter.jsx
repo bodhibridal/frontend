@@ -11,7 +11,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-orange-500 to-red-500 text-white">
+    <footer className="bg-gradient-to-r from-orange-400 to-red-400 text-white">
       {/* Upper Section */}
       <div className="max-w-7xl mx-auto px-4 py-18 pb-25">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
