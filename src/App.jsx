@@ -217,13 +217,71 @@ export default function App() {
           }
         />
 
-        <Route path="/careers" element={<Careers />} />
+        {/* <Route path="/careers" element={<Careers />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/BuddhVihar" element={<BuddhVihar />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} /> */}
+        
+        <Route
+          path="/careers"
+          element={
+            <MainLayout>
+              <Careers />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <MainLayout>
+              <About />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <MainLayout>
+              <Contact />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/BuddhVihar"
+          element={
+            <MainLayout>
+              <BuddhVihar />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/faq"
+          element={
+            <MainLayout>
+              <FAQ />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/privacy-policy"
+          element={
+            <MainLayout>
+              <PrivacyPolicy />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/terms-and-conditions"
+          element={
+            <MainLayout>
+              <TermsAndConditions />
+            </MainLayout>
+          }
+        />
+
 
         <Route path="/auth/linkedin/callback" element={<LinkedInCallback />} />
 
@@ -233,7 +291,15 @@ export default function App() {
         <Route path="/blogs/:id" element={<ArticleDetails />} />
 
         {/* Public Routes WITH Header & Footer */}
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
+         <Route
+          path="/"
+          element={
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          }
+        />
         <Route
           path="/login"
           element={

@@ -1,35 +1,67 @@
+// import React from 'react'
+// //import DemoRibbon from '../comman/DemoRibbon'
+// import Navbar from '../comman/Navbar'
+// import Heroo from '../home/Heroo'
+// // import DemoRibbon from '../Components/common/DemoRibbon'
+// // import Navbar from '../Components/common/Navbar'
+// // import Hero from '../Components/home/Hero'
+// import Welcome from '../home/Welcome';
+// import HowItWorks from '../home/HowItWorks'
+// import FindPartner from '../home/FindPartner'
+// import LatestBlog from '../home/LatestBlog'
+// import OurMembers from '../home/OurMembers'
+// // import Footer from '../common/Footer'
+// import Stories from '../home/Stories'
+// import Testimonials from '../home/Testimonials' 
+// import NewFoooter from "../home/NewFoooter"
+
+
+// const Home = () => {
+//   return (
+//     <>
+//       <Navbar/>
+//       <Heroo/>
+//       <Welcome/>
+//       <OurMembers/>
+//       <Testimonials/>
+//       <Stories/>
+//       <HowItWorks/>
+//       <LatestBlog/>
+//       <FindPartner/>
+//       <NewFoooter/>
+//       {/* <Footer/> */}
+//     </>
+//   )
+// }
+
+// export default Home
+
+
+
 import React from 'react'
 //import DemoRibbon from '../comman/DemoRibbon'
-import Navbar from '../comman/Navbar'
 import Heroo from '../home/Heroo'
-// import DemoRibbon from '../Components/common/DemoRibbon'
-// import Navbar from '../Components/common/Navbar'
-// import Hero from '../Components/home/Hero'
 import Welcome from '../home/Welcome';
 import HowItWorks from '../home/HowItWorks'
 import FindPartner from '../home/FindPartner'
 import LatestBlog from '../home/LatestBlog'
 import OurMembers from '../home/OurMembers'
-// import Footer from '../common/Footer'
 import Stories from '../home/Stories'
-import Testimonials from '../home/Testimonials' 
-import NewFoooter from "../home/NewFoooter"
+import Testimonials from '../home/Testimonials'
+
 
 
 const Home = () => {
   return (
     <>
-      <Navbar/>
-      <Heroo/>
-      <Welcome/>
-      <OurMembers/>
-      <Testimonials/>
-      <Stories/>
-      <HowItWorks/>
-      <LatestBlog/>
-      <FindPartner/>
-      <NewFoooter/>
-      {/* <Footer/> */}
+      <Heroo />
+      <Welcome />
+      <OurMembers />
+      <Testimonials />
+      <Stories />
+      <HowItWorks />
+      <LatestBlog />
+      <FindPartner />
     </>
   )
 }
