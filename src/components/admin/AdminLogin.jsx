@@ -156,7 +156,7 @@ const AdminLogin = () => {
             className={`w-full py-3 px-4 rounded-lg font-bold text-white shadow-md transition duration-200 flex items-center justify-center gap-3 ${
               loading
                 ? "bg-orange-400 opacity-80 cursor-not-allowed"
-                : "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 hover:shadow-lg"
+                : "bg-gradient-to-r from-red-400 to-red-400 hover:from-red-400 hover:to-red-400 hover:shadow-lg"
             }`}
           >
             {loading ? (

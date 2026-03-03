@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const BASE_URL = "https://backend-q0wc.onrender.com";
+const BASE_URL = "https://backend-5e2b.onrender.com";
 
 const REPORT_API_URL = `${BASE_URL}/api/admin/reports`;
 const USERS_API_URL = `${BASE_URL}/api/admin/users/handle`;

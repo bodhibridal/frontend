@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Our backend address
-const BASE_URL = "https://backend-q0wc.onrender.com/api";
+const BASE_URL = "https://backend-5e2b.onrender.com/api";
 
 /**
  * 🛠️ AUTHENTICATION HELPER

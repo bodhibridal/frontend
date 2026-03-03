@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // This is the location of our backend server
-const BASE_URL = "https://backend-q0wc.onrender.com/api/cart";
+const BASE_URL = "https://backend-5e2b.onrender.com/api/cart";
 
 /**
  * 🛠️ CONFIGURATION HELPER

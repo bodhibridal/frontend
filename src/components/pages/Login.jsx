@@ -180,7 +180,7 @@ export default function Login() {
             </div>
             <Link
               to="/forgot-password"
-              className="  text-orange-600 hover:text-red-600 hover:underline font-medium transition"
+              className="  text-red-400 hover:text-red-400 hover:underline font-medium transition"
             >
               Forgot Password?
             </Link>
@@ -204,7 +204,7 @@ export default function Login() {
             className={`w-full py-3 mt-4 font-bold text-white rounded-lg shadow-md transition duration-200 ${
               loading
                 ? "bg-orange-400 cursor-not-allowed opacity-80"
-                : "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 hover:shadow-lg"
+                : "bg-gradient-to-r from-red-400 to-red-400 hover:from-red-400 hover:to-red-600 hover:shadow-lg"
             }`}
           >
             {loading ? "Logging in..." : "Login to Your Account"}
@@ -247,7 +247,7 @@ export default function Login() {
             </Link> */}
             <Link
               to="/register"
-              className="font-bold text-orange-600 hover:text-red-600 hover:underline transition duration-200"
+              className="font-bold text-red-400 hover:text-red-400 hover:underline transition duration-200"
             >
               Create Account
             </Link>

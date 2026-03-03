@@ -1213,7 +1213,7 @@ function About() {
       id: 1,
       icon: (
         <svg
-          className="w-10 h-10 text-orange-500"
+          className="w-10 h-10 text-red-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -1239,7 +1239,7 @@ function About() {
       id: 2,
       icon: (
         <svg
-          className="w-10 h-10 text-orange-500"
+          className="w-10 h-10 text-red-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -1265,7 +1265,7 @@ function About() {
       id: 3,
       icon: (
         <svg
-          className="w-10 h-10 text-orange-500"
+          className="w-10 h-10 text-red-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -1291,7 +1291,7 @@ function About() {
       id: 4,
       icon: (
         <svg
-          className="w-10 h-10 text-orange-500"
+          className="w-10 h-10 text-red-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -1337,7 +1337,7 @@ function About() {
       title: "Buddhist Matrimonial",
       description:
         "Trusted platform with background verification and dedicated match support for Buddhist families.",
-      color: "bg-orange-500",
+      color: "bg-red-400",
     },
     {
       id: 2,
@@ -1359,7 +1359,7 @@ function About() {
       title: "Global Vihar Network",
       description:
         "Connect with Buddha Vihars worldwide for events, collaboration, and spiritual guidance.",
-      color: "bg-red-500",
+      color: "bg-red-400",
     },
     {
       id: 3,
@@ -1381,7 +1381,7 @@ function About() {
       title: "Education Support",
       description:
         "Scholarships, skill training, career guidance, and quality education opportunities.",
-      color: "bg-orange-500",
+      color: "bg-red-400",
     },
     {
       id: 4,
@@ -1403,7 +1403,7 @@ function About() {
       title: "Job Portal",
       description:
         "Internships, job placements, and professional networking for Buddhist youth.",
-      color: "bg-red-500",
+      color: "bg-red-400",
     },
     {
       id: 5,
@@ -1425,7 +1425,7 @@ function About() {
       title: "Entrepreneurship",
       description:
         "Business mentoring, training, and Buddhist business network for economic empowerment.",
-      color: "bg-orange-500",
+      color: "bg-red-400",
     },
     {
       id: 6,
@@ -1447,7 +1447,7 @@ function About() {
       title: "Buddhist Teachings",
       description:
         "Online courses, meditation programs, and Dhamma talks for spiritual growth.",
-      color: "bg-red-500",
+      color: "bg-red-400",
     },
   ];
 
@@ -1538,7 +1538,7 @@ function About() {
 
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-orange-500 to-red-500 py-16 sm:py-20 md:py-28">
+     <section className="bg-red-400 py-16 sm:py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
             Empowering the Buddhist Community
@@ -1570,7 +1570,7 @@ function About() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
             <div>
-              <span className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              <span className="inline-block bg-orange-100 text-red-400 px-4 py-2 rounded-full text-sm font-semibold mb-4">
                 OUR MISSION
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-6">
@@ -1578,7 +1578,7 @@ function About() {
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed mb-6">
                 Our mission is to uplift the{" "}
-                <span className="font-bold text-orange-500">
+                <span className="font-bold text-red-400">
                   Buddhist community socially, culturally, economically, and
                   digitally
                 </span>{" "}
@@ -1589,20 +1589,20 @@ function About() {
               </p>
               <p className="text-lg text-gray-700 leading-relaxed mb-6">
                 We are ensuring that every{" "}
-                <span className="font-bold">
+                <span className="font-bold text-red-400">
                   Buddhist family, Vihar, youth, and professional
                 </span>{" "}
                 is connected, empowered, and supported to achieve holistic
                 growth and dignity.
               </p>
               <div className="flex flex-wrap gap-3">
-                <span className="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-orange-100 text-red-400 px-4 py-2 rounded-full text-sm font-medium">
                   🙏 Social Upliftment
                 </span>
                 <span className="bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-medium">
                   🎭 Cultural Preservation
                 </span>
-                <span className="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-orange-100 text-red-400 px-4 py-2 rounded-full text-sm font-medium">
                   💰 Economic Growth
                 </span>
                 <span className="bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-medium">
@@ -1632,7 +1632,7 @@ function About() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <span className="inline-block bg-orange-100 text-red-400 px-4 py-2 rounded-full text-sm font-semibold mb-4">
               MISSION PILLARS
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
@@ -1674,7 +1674,7 @@ function About() {
                       className="flex items-start gap-2 text-sm text-gray-600"
                     >
                       <svg
-                        className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5"
+                        className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -1716,7 +1716,7 @@ function About() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Traditional Values */}
             <div className="bg-gradient-to-br from-orange-50 to-red-50 p-8 md:p-10 rounded-2xl border border-orange-100">
-              <div className="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center mb-6">
+              <div className="w-16 h-16 bg-red-400 rounded-xl flex items-center justify-center mb-6">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -1741,29 +1741,29 @@ function About() {
               </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">
                     Buddhist teachings (Dhamma)
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">
                     Compassion & mindfulness
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">
                     Community support & unity
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">Cultural preservation</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">
                     Equality & social harmony
                   </span>
@@ -1773,7 +1773,7 @@ function About() {
 
             {/* Modern Technology */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 md:p-10 rounded-2xl border border-gray-200">
-              <div className="w-16 h-16 bg-red-500 rounded-xl flex items-center justify-center mb-6">
+              <div className="w-16 h-16 bg-red-400 rounded-xl flex items-center justify-center mb-6">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -1797,29 +1797,29 @@ function About() {
               </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">
                     Digital platforms & apps
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">Online learning systems</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">
                     Community networking tools
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">
                     Secure data & verification
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  <span className="w-2 h-2 bg-red-400 rounded-full"></span>
                   <span className="text-gray-700">Global connectivity</span>
                 </li>
               </ul>
@@ -1833,7 +1833,7 @@ function About() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <span className="inline-block bg-red-100 text-red-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
               OUR SERVICES
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
@@ -1875,7 +1875,7 @@ function About() {
       </section>
 
       {/* Impact Section (Stats) */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-orange-500 to-red-500">
+      <section className="py-16 md:py-24 bg-gradient-to-r from-red-400 to-red-500">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
           {/* Section Header */}
           <div className="text-center mb-12">
@@ -1911,7 +1911,7 @@ function About() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <span className="inline-block bg-red-100 text-red-400 px-4 py-2 rounded-full text-sm font-semibold mb-4">
               LEADERSHIP
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
@@ -1959,7 +1959,7 @@ function About() {
                   {hasExtraDetails(member) && (
                     <button
                       onClick={() => openModal(member)}
-                      className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-2 bg-red-400 hover:bg-red-500 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
                     >
                       <span>Read More</span>
                       <svg
@@ -1983,7 +1983,7 @@ function About() {
           </div>
 
           {/* Combined Vision Box */}
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-8 md:p-12 text-center mb-12">
+          <div className="bg-gradient-to-r from-red-400 to-red-500 rounded-2xl p-8 md:p-12 text-center mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6">
               Our Shared Vision
             </h3>
@@ -2015,7 +2015,7 @@ function About() {
           </div>
 
           {/* Join Our Team CTA */}
-          <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-2xl p-8 md:p-12 text-center border border-orange-200">
+          <div className="bg-gradient-to-r from-red-100 to-red-200 rounded-2xl p-8 md:p-12 text-center border border-red-200">
             <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
               Want to Join Our Mission?
             </h3>
@@ -2025,7 +2025,7 @@ function About() {
             </p>
             <a
               href="#/careers"
-              className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg"
+              className="inline-block bg-red-400 hover:bg-red-500 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg"
             >
               View Open Positions
             </a>
@@ -2326,7 +2326,7 @@ function About() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-orange-500 to-red-500">
+      <section className="py-16 md:py-24 bg-gradient-to-r from-red-400 to-red-400">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to Join Our Community?
@@ -2338,13 +2338,13 @@ function About() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/register"
-              className="bg-white text-orange-500 font-bold py-4 px-10 rounded-lg hover:bg-gray-100 transition-colors shadow-lg text-lg"
+              className="bg-white text-red-400 font-bold py-4 px-10 rounded-lg hover:bg-gray-100 transition-colors shadow-lg text-lg"
             >
               Get Started Today
             </a>
             <a
               href="/monasteries"
-              className="bg-transparent border-2 border-white text-white font-bold py-4 px-10 rounded-lg hover:bg-white hover:text-orange-500 transition-colors text-lg"
+              className="bg-transparent border-2 border-white text-white font-bold py-4 px-10 rounded-lg hover:bg-white hover:text-red-400 transition-colors text-lg"
             >
               Explore Vihars
             </a>

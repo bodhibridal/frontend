@@ -1393,7 +1393,7 @@ function Header() {
 
                 <Link
                   to="/register"
-                  className=" bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold  transition-all duration-200"
+                  className=" bg-red-400 text-white px-4 py-2 rounded-lg font-semibold  transition-all duration-200"
                 >
                   Register 
                 </Link>
