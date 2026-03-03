@@ -707,7 +707,7 @@ useEffect(() => {
                   </div>
                 </div>
                 <div className="relative z-10">
-                  <span className="text-6xl mb-6 block">🪷</span>
+                  <span className="text-6xl mb-6 block"></span>
                   <blockquote className="text-xl md:text-2xl lg:text-3xl font-medium italic mb-6 max-w-3xl mx-auto">
                     "Three things cannot be long hidden: the sun, the moon, and the
                     truth."
