@@ -409,7 +409,7 @@ const ContactPage = () => {
           <div className="text-center mb-12 animate-fade-in">
 
 
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4 bg-gradient-to-r from-red-400 to-red-400 bg-clip-text text-transparent">
               Get In Touch
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -526,7 +526,7 @@ const ContactPage = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-4 px-6 bg-gradient-to-r from-orange-500 to-red-500
+                    className={`w-full py-4 px-6 bg-gradient-to-r from-red-400 to-red-400
 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-200 ${isSubmitting
                         ? "opacity-50 cursor-not-allowed"
                         : "hover:from-orange-700 hover:to-red-700"
@@ -639,7 +639,7 @@ hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-xl shado
               </div>
 
               {/* FAQ Section */}
-              <div className="bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl p-6 text-white">
+              <div className="bg-gradient-to-br from-red-400 to-red-400 rounded-2xl p-6 text-white">
                 <h3 className="font-semibold text-lg mb-4">Quick Help</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 p-3 bg-white bg-opacity-10 rounded-lg hover:bg-opacity-20 transition duration-200 cursor-pointer">
