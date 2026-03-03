@@ -7,7 +7,7 @@ const API_BASE_URL =
  */
 export const fetchAllMonks = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/monks`);
+    const response = await fetch(`${API_BASE_URL}/api/monks`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -26,7 +26,7 @@ export const fetchAllMonks = async () => {
  */
 export const fetchMonkById = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/monks/${id}`);
+    const response = await fetch(`${API_BASE_URL}/api/monks/${id}`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
