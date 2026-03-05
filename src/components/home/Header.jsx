@@ -444,13 +444,23 @@ function Header() {
                   </Link>
                 </li>
 
-                <li>
+                {/* <li>
                   <Link
                     to="/blog"
                     className="block py-3 px-4 text-gray-700 hover:text-[#4D6D9E] hover:bg-gray-50 rounded-lg transition-colors font-medium"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Blog
+                  </Link>
+                </li> */}
+
+                 <li>
+                  <Link
+                    to="/buddhvihar"
+                    className="block py-3 px-4 text-gray-700 hover:text-[#4D6D9E] hover:bg-gray-50 rounded-lg transition-colors font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    BuddhVihar
                   </Link>
                 </li>
               </ul>
