@@ -61,6 +61,12 @@ import PrivacyPolicy from "./components/pages/PrivacyPolicy";
 import TermsAndConditions from "./components/pages/TermsAndConditions";
 import NewFoooter from "./components/home/NewFoooter";
 
+import MonasteriesPage from "./components/admin/monasteries/MonasteriesP";
+import MonasteryForm from "./components/admin/monasteries/MonasteryForm";
+import TeachingsPage from "./components/admin/teachings/TeachingPage";
+import MonksPage from "./components/admin/monks/MonksPage";
+import MonkForm from "./components/admin/monks/monkform";
+
 // Protected Route Component (For regular users)
 const UserProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("accessToken");
@@ -162,6 +168,53 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Monasteries Routes */}
+        <Route 
+        path="/admin/monasteries"
+        element={
+          <ProtectedRoute>
+            <MonasteriesPage />
+          </ProtectedRoute>
+        }
+        />
+          <Route
+        path="/admin/monasteries/create"
+        element={
+          <ProtectedRoute>
+            <MonasteryForm />
+          </ProtectedRoute>
+        }
+        />
+         
+          <Route
+        path="/admin/monasteries/edit/:id"
+        element={
+          <ProtectedRoute>
+            <MonasteryForm />
+          </ProtectedRoute>
+        }
+        />  
+        {/* Teachings Routes */}
+        <Route 
+        path="/admin/teachings" 
+        element={
+          <ProtectedRoute>
+            <TeachingsPage />
+          </ProtectedRoute>
+        }
+        />
+        {/* Monks Routes */}
+        <Route 
+        path="/admin/monks"
+        element={
+          <ProtectedRoute>
+            <MonksPage />
+          </ProtectedRoute>
+        }
+        />
+
+        {/* // */}
         <Route
           path="/admin/users/not-renewed"
           element={
@@ -189,7 +242,8 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-
+        
+        
         <Route
           path="/admin/users/:userId"
           element={
@@ -282,7 +336,8 @@ export default function App() {
           }
         />
 
-
+      
+ 
         <Route path="/auth/linkedin/callback" element={<LinkedInCallback />} />
 
         <Route path="/admin-plans-new" element={<PlanFormWrapper />} />

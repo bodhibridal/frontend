@@ -12,6 +12,9 @@ const AdminSidebar = () => {
     { path: '/admin/plans', label: 'Plans' },
     { path: '/admin/blogs', label: 'Blogs' },
     { path: '/admin/reports', label: 'Reports' },
+    { path: '/admin/monasteries', label: 'Monasteries' },
+    { path: '/admin/buddhist-masters', label: 'Buddhist Masters' },
+    { path: '/admin/teachings', label: 'Teachings' }
   ];
 
   const handleLinkClick = () => {

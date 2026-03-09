@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { adminAPI } from "../services/adminApi";
 import AdminPlans from "./AdminAllPlan.jsx";
@@ -7,11 +6,14 @@ import AdminFooter from "./AdminFooter.jsx";
 import AdminReport from "../pages/AdminReport.jsx";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
+import MonasteriesPage from "./monasteries/MonasteriesP.jsx";
+import MonksPage from "./monks/MonksPage.jsx";
+import TeachingsPage from "./teachings/TeachingPage.jsx";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Determine active section from URL
   const getActiveSectionFromURL = () => {
     const path = location.pathname;
@@ -21,6 +23,9 @@ const AdminDashboard = () => {
     if (path.includes("/admin/plans")) return "plans";
     if (path.includes("/admin/blogs")) return "blogs";
     if (path.includes("/admin/reports")) return "reports";
+    if (path.includes("/admin/monasteries")) return "monasteries";
+    if (path.includes("/admin/buddhist-masters")) return "buddhist masters";
+    if (path.includes("/admin/teachings")) return "teachings";
     return "dashboard";
   };
 
@@ -662,74 +667,53 @@ const AdminDashboard = () => {
             <AdminReport />
           </div>
         )}
-        
-        <AdminFooter />
+        {/*         
+          {activeSection === "monasteries" && (
+          <div className="p-4 sm:p-6">
+            { loggedInUser && <AdminMonastery user={loggedInUser} /> }
+
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
+              Monasteries Management
+            </h1>
+            <p className="text-gray-600 text-sm sm:text-base">
+              Manage monastery information and details here.
+            </p>
+          </div>
+        )}
+            {/* // */}
+        {/* {activeSection === "buddhist masters" && (
+          <div className="p-4 sm:p-6">
+            { loggedInUser && <AdminBuddhistMaster user={loggedInUser} /> }
+
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
+              Buddhist Masters Management
+            </h1>
+            <p className="text-gray-600 text-sm sm:text-base">
+              Manage Buddhist masters information and details here.
+            </p>
+          </div>
+        )} */}
+        {activeSection === "monasteries" && (
+          <div className="p-0">
+            <MonasteriesPage />
+          </div>
+        )}
+
+        {activeSection === "buddhist masters" && (
+          <div className="p-0">
+            <MonksPage />
+          </div>
+        )}
+
+        {activeSection === "teachings" && (
+          <div className="p-0">
+            <TeachingsPage />
+          </div>
+        )}
+         <AdminFooter />
       </div>
     </div>
   );
 };
 
 export default AdminDashboard;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
