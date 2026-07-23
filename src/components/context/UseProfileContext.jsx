@@ -69,7 +69,7 @@ export const UserProfileProvider = ({ children }) => {
 
         // Create clean profile
         const completeProfile = {
-          // Personal Informationd
+          // Personal InformationdDDDDDDD
           first_name: userProfile.first_name || "",
           last_name: userProfile.last_name || "",
           full_name: userProfile.full_name || "",
