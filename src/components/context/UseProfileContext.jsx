@@ -38,17 +38,17 @@ export const UserProfileProvider = ({ children }) => {
 
         //   Remove mixed format
         let cleanPrompts = {};
-        
+
         if (userProfile.prompts && typeof userProfile.prompts === "object") {
           console.log("🔍 Cleaning prompts:", userProfile.prompts);
-          
+
           for (const [key, value] of Object.entries(userProfile.prompts)) {
             // Skip 'question-key' wrapper
             if (key !== "question-key") {
               cleanPrompts[key] = value;
             }
           }
-          
+
           console.log("✅ Cleaned prompts:", cleanPrompts);
         }
 
@@ -69,7 +69,7 @@ export const UserProfileProvider = ({ children }) => {
 
         // Create clean profile
         const completeProfile = {
-          // Personal Information
+          // Personal Informationd
           first_name: userProfile.first_name || "",
           last_name: userProfile.last_name || "",
           full_name: userProfile.full_name || "",
@@ -104,10 +104,10 @@ export const UserProfileProvider = ({ children }) => {
           education: userProfile.education || "",
           headline: userProfile.headline || "",
           education_institution_name: userProfile.education_institution_name || "",
-          
+
           //  CLEAN PROMPTS
           prompts: cleanPrompts,
-          
+
           work_environment: userProfile.work_environment || "",
           interaction_style: userProfile.interaction_style || "",
           work_rhythm: userProfile.work_rhythm || "",
@@ -204,7 +204,7 @@ export const UserProfileProvider = ({ children }) => {
 
   const updateProfile = (newProfileData) => {
     console.log("🔄 Updating profile with:", newProfileData);
-    
+
     const updatedProfile = {
       ...profile,
       ...newProfileData,
