@@ -141,15 +141,15 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Email Address
+              Email or Mobile Number
             </label>
             <input
-              type="email"
+              type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
-              placeholder="Enter your email"
+              placeholder="Enter your email or mobile number"
             />
           </div>
 

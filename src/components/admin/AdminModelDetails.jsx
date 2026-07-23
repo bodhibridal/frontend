@@ -479,6 +479,13 @@ function Section({ title, children }) {
   );
 }
 
+const formatHeight = (inches) => {
+  if (!inches) return "";
+  const ft = Math.floor(inches / 12);
+  const inch = inches % 12;
+  return `${ft}'${inch}"`;
+};
+
 // MAIN COMPONENT
 export default function AdminModelDetails() {
   const { userId } = useParams();
@@ -769,6 +776,11 @@ export default function AdminModelDetails() {
                   📱 {model.phone}
                 </span>
               )}
+              {model.alternate_phone && (
+                <span className="bg-gray-100 text-gray-700 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs">
+                  📱 Alt: {model.alternate_phone}
+                </span>
+              )}
               {model.city && (
                 <span className="bg-gray-100 text-gray-700 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs">
                   📍 {model.city}
@@ -861,8 +873,10 @@ export default function AdminModelDetails() {
                 <InfoItem label="User Name" value={model.username} type="UserName" />
                 <InfoItem label="Email" value={model.email} type="email" />
                 <InfoItem label="Phone" value={model.phone} />
+                <InfoItem label="Alternate Phone" value={model.alternate_phone} />
                 <InfoItem label="Date of Birth" value={formatDateForDisplay(model.dob)} />
                 <InfoItem label="Age" value={model.age} />
+                <InfoItem label="BuddhVihar / Temple" value={model.buddh_vihar} />
                 <InfoItem label="Gender" value={model.gender} />
                 <InfoItem label="Marital Status" value={model.marital_status} />
                 <InfoItem label="City" value={model.city} />
@@ -873,7 +887,10 @@ export default function AdminModelDetails() {
               </Section>
 
               <Section title="Personal Details">
-                <InfoItem label="Height in Inches" value={model.height} />
+                <InfoItem label="Height" value={formatHeight(model.height)} />
+                <InfoItem label="Complexion" value={model.complexion} />
+                <InfoItem label="Father's / Mother's Name" value={model.parents_name} />
+                <InfoItem label="Maternal Uncle's Name" value={model.maternal_uncle_name} />
                 <InfoItem label="Professional Identity" value={model.professional_identity} />
                 <InfoItem label="Zodiac Sign" value={model.zodiac_sign} />
                 <InfoItem

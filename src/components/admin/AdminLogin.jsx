@@ -17,10 +17,11 @@ const AdminLogin = () => {
     setError("");
 
     try {
-      // Environment variable se
-      const API_BASE_URL =
-        import.meta.env.VITE_API_BASE_URL ||
-        "https://backend-q0wc.onrender.com";
+      const defaultUrl = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
+        ? "http://localhost:3435" 
+        : "https://backend-q0wc.onrender.com";
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || defaultUrl;
+
       const response = await axios.post(
         `${API_BASE_URL}/api/admin/login`,
         formData,

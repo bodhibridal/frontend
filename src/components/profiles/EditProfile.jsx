@@ -479,8 +479,10 @@ export default function EditProfilePage() {
     last_name: "",
     email: "",
     phone: "",
+    alternate_phone: "",
     age: "",
     dob: "",
+    buddh_vihar: "",
     gender: "",
     education: "",
     relationship_pace: "",
@@ -528,6 +530,9 @@ export default function EditProfilePage() {
     approach_to_physical_closeness: "",
     preference_of_closeness: "",
     love_language_affection: "",
+    complexion: "",
+    parents_name: "",
+    maternal_uncle_name: "",
     life_rhythms: {},
     prompts: {},
   });
@@ -736,8 +741,14 @@ useEffect(() => {
       username: profile.username || "",
       email: profile.email || "",
       phone: profile.phone || "",
+      alternate_phone: profile.alternate_phone || "",
       age: profile.age || "",
-      dob: profile.dob?.split("T")[0] || "",
+      dob: profile.dob
+        ? (typeof profile.dob === "string"
+            ? profile.dob.split("T")[0]
+            : new Date(profile.dob).toISOString().split("T")[0])
+        : "",
+      buddh_vihar: profile.buddh_vihar || "",
       gender: mapToUIEnum("gender", profile.gender),
       education: mapToUIEnum("education", profile.education),
       relationship_pace: mapToUIEnum(
@@ -790,8 +801,6 @@ useEffect(() => {
       interested_in: profile.interested_in || "",
       relationship_goal: profile.relationship_goal || "",
 
-      interests_categories: interestsCategories,
-
       children_preference: mapToUIEnum(
         "children_preference",
         profile.children_preference,
@@ -819,6 +828,10 @@ useEffect(() => {
 
       love_language_affection: profile.love_language_affection || null,
 
+      complexion: profile.complexion || "",
+      parents_name: profile.parents_name || "",
+      maternal_uncle_name: profile.maternal_uncle_name || "",
+
       life_rhythms: profile.life_rhythms || {},
       prompts: loadedPrompts,
     });
@@ -826,7 +839,7 @@ useEffect(() => {
     if (profile.profile_image) {
       setImagePreview(profile.profile_image);
     }
-  }, [profile?.user_id]);
+  }, [profile?.user_id, profile?.dob, profile?.phone]);
 
   // ================== PROGRESS & STEP HANDLING ==================
   const progressPercentage = (currentStep / totalSteps) * 100;
@@ -855,7 +868,21 @@ useEffect(() => {
 
   // ================== CHANGE HANDLER ==================
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    let updatedFields = { [name]: value };
+
+    if (name === "dob" && value) {
+      const birthDate = new Date(value);
+      const today = new Date();
+      let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        calculatedAge--;
+      }
+      updatedFields.age = calculatedAge > 0 ? calculatedAge : "";
+    }
+
+    setFormData((prev) => ({ ...prev, ...updatedFields }));
   };
 
   // ================== SUBMIT HANDLER ==================
@@ -919,8 +946,10 @@ useEffect(() => {
         username: formData.username.trim(),
         email: formData.email.trim(),
         phone: formData.phone || null,
+        alternate_phone: formData.alternate_phone || null,
         age: formData.age ? Number(formData.age) : null,
         dob: formData.dob || null,
+        buddh_vihar: formData.buddh_vihar || null,
         gender: mapToDBEnum("gender", formData.gender),
         education: mapToDBEnum("education", formData.education),
         marital_status: mapToDBEnum("marital_status", formData.marital_status),
@@ -961,6 +990,10 @@ useEffect(() => {
         ),
 
         prompts: formData.prompts, // final q
+
+        complexion: formData.complexion || null,
+        parents_name: formData.parents_name || null,
+        maternal_uncle_name: formData.maternal_uncle_name || null,
 
         smoking: mapToDBEnum("smoking", formData.smoking),
         drinking: mapToDBEnum("drinking", formData.drinking),
@@ -1549,6 +1582,20 @@ const CAMERA_URL =
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Alternate Phone (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      name="alternate_phone"
+                      value={formData.alternate_phone}
+                      onChange={handleChange}
+                      placeholder="+91 9876543210"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Date of Birth
                     </label>
                     <input
@@ -1576,6 +1623,62 @@ const CAMERA_URL =
                       Age & gender are AI-estimated (±10% tolerance). You can
                       edit them.
                     </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      BuddhVihar / Temple
+                    </label>
+                    <input
+                      type="text"
+                      name="buddh_vihar"
+                      value={formData.buddh_vihar}
+                      onChange={handleChange}
+                      placeholder="Enter Buddh Vihar name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Complexion
+                    </label>
+                    <input
+                      type="text"
+                      name="complexion"
+                      value={formData.complexion}
+                      onChange={handleChange}
+                      placeholder="e.g. Fair / Medium"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Father's / Mother's Name
+                    </label>
+                    <input
+                      type="text"
+                      name="parents_name"
+                      value={formData.parents_name}
+                      onChange={handleChange}
+                      placeholder="e.g. Ayu. Sudam Gajbhiye"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Maternal Uncle's Name
+                    </label>
+                    <input
+                      type="text"
+                      name="maternal_uncle_name"
+                      value={formData.maternal_uncle_name}
+                      onChange={handleChange}
+                      placeholder="e.g. Ayu. Khushal Somkuwar"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
                   </div>
 
                   <div>
@@ -1829,33 +1932,14 @@ const CAMERA_URL =
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Education
                     </label>
-                    <select
+                    <input
+                      type="text"
                       name="education"
                       value={formData.education}
                       onChange={handleChange}
+                      placeholder="e.g. B.A.M.S. / B.Com."
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    >
-                      <option value="">Select Education</option>
-                      <option value="No Formal Education">
-                        No Formal Education
-                      </option>
-                      <option value="Currently Studying">
-                        Currently Studying
-                      </option>
-                      <option value="High School">High School</option>
-                      <option value="Vocational / Trade School">
-                        Vocational / Trade School
-                      </option>
-                      <option value="Associate Degree">Associate Degree</option>
-                      <option value="Bachelors Degree">Bachelors Degree</option>
-                      <option value="Masters Degree">Masters Degree</option>
-                      <option value="Doctorate">Doctorate</option>
-                      <option value="HIGH_SCHOOL">High_School</option>
-                      <option value="BACHELORS">Bachelors</option>
-                      <option value="MASTERS">Master</option>
-                      <option value="PHD">PHD</option>
-                      <option value="Other">Others</option>
-                    </select>
+                    />
                   </div>
 
                   <div>
