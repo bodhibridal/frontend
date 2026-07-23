@@ -13,10 +13,21 @@ export default function Register() {
     email: "",
     password: "",
     profession: "",
-    username: "", //  username field added
-    about_me: "", //  about_me field added
+    username: "", 
+    about_me: "", 
+    dob: "",
+    phone: "",
     interests: [],
     marital_status: "Single",
+    height_ft: "",
+    height_in: "",
+    complexion: "",
+    education: "",
+    parents_name: "",
+    address: "",
+    maternal_uncle_name: "",
+    buddh_vihar: "",
+    alternate_phone: "",
   });
 
   const [error, setError] = useState("");
@@ -49,10 +60,21 @@ export default function Register() {
         email: form.email,
         password: form.password,
         profession: form.profession,
-        username: form.username, // ✅ username added to payload
-        about_me: form.about_me || null, // ✅ about_me added to payload
+        username: form.username,
+        about_me: form.about_me || null,
+        dob: form.dob || null,
+        phone: form.phone || null,
         interests: form.interests,
         marital_status: form.marital_status,
+        height_ft: form.height_ft ? Number(form.height_ft) : null,
+        height_in: form.height_in ? Number(form.height_in) : null,
+        complexion: form.complexion || null,
+        education: form.education || null,
+        parents_name: form.parents_name || null,
+        address: form.address || null,
+        maternal_uncle_name: form.maternal_uncle_name || null,
+        buddh_vihar: form.buddh_vihar || null,
+        alternate_phone: form.alternate_phone || null,
       };
 
       // Register the new user (API call only)
@@ -176,6 +198,179 @@ export default function Register() {
               placeholder="Software Engineer"
               value={form.profession}
               onChange={handleChange}
+              className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              name="dob"
+              value={form.dob}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white font-medium text-gray-700"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Mobile Number
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="e.g. +91 9876543210"
+                value={form.phone}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white font-medium text-gray-700"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Alternate Mobile Number (Optional)
+              </label>
+              <input
+                type="tel"
+                name="alternate_phone"
+                placeholder="e.g. +91 9876543211"
+                value={form.alternate_phone}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white font-medium text-gray-700"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Height (Feet)
+              </label>
+              <select
+                name="height_ft"
+                value={form.height_ft}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white text-gray-700"
+              >
+                <option value="">Select Ft</option>
+                <option value="4">4'</option>
+                <option value="5">5'</option>
+                <option value="6">6'</option>
+                <option value="7">7'</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Height (Inches)
+              </label>
+              <select
+                name="height_in"
+                value={form.height_in}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white text-gray-700"
+              >
+                <option value="">Select In</option>
+                {[...Array(12).keys()].map((i) => (
+                  <option key={i} value={i}>{i}"</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Complexion
+              </label>
+              <input
+                type="text"
+                name="complexion"
+                placeholder="e.g. Fair / Medium"
+                value={form.complexion}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Educational Qualification
+            </label>
+            <input
+              type="text"
+              name="education"
+              placeholder="e.g. B.Com., M.A. / B.A.M.S."
+              value={form.education}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Father's / Mother's Name
+              </label>
+              <input
+                type="text"
+                name="parents_name"
+                placeholder="e.g. Ayu. Sudam Gajbhiye"
+                value={form.parents_name}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Maternal Uncle's Name
+              </label>
+              <input
+                type="text"
+                name="maternal_uncle_name"
+                placeholder="e.g. Ayu. Khushal Somkuwar"
+                value={form.maternal_uncle_name}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              BuddhVihar / Temple
+            </label>
+            <input
+              type="text"
+              name="buddh_vihar"
+              placeholder="e.g. Rahul Nagar Buddh Vihar"
+              value={form.buddh_vihar}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Address
+            </label>
+            <input
+              type="text"
+              name="address"
+              placeholder="e.g. J-359, Kotra Sultanabad, Bhopal (M.P.)"
+              value={form.address}
+              onChange={handleChange}
+              required
               className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
             />
           </div>

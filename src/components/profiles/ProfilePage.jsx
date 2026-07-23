@@ -77,6 +77,13 @@ function LifeRhythmsDisplay({ data }) {
   );
 }
 
+const formatHeight = (inches) => {
+  if (!inches) return "";
+  const ft = Math.floor(inches / 12);
+  const inch = inches % 12;
+  return `${ft}'${inch}"`;
+};
+
 export default function ProfilePage() {
   const { profile: currentUserProfile } = useUserProfile();
   const [displayProfile, setDisplayProfile] = useState(null);
@@ -428,11 +435,13 @@ export default function ProfilePage() {
                   type="email"
                 />
                 <InfoItem label="Phone" value={displayProfile.phone} />
+                <InfoItem label="Alternate Phone" value={displayProfile.alternate_phone} />
                 <InfoItem
                   label="Date of Birth"
                   value={formatDateForDisplay(displayProfile.dob)}
                 />
                 <InfoItem label="Age" value={displayProfile.age} />
+                <InfoItem label="BuddhVihar / Temple" value={displayProfile.buddh_vihar} />
                 <InfoItem label="Gender" value={displayProfile.gender} />
                 <InfoItem
                   label="Marital Status"
@@ -448,8 +457,20 @@ export default function ProfilePage() {
               {/* Personal Details */}
               <Section title="Personal Details">
                 <InfoItem
-                  label="Height in Inches"
-                  value={displayProfile.height}
+                  label="Height"
+                  value={formatHeight(displayProfile.height)}
+                />
+                <InfoItem
+                  label="Complexion"
+                  value={displayProfile.complexion}
+                />
+                <InfoItem
+                  label="Father's / Mother's Name"
+                  value={displayProfile.parents_name}
+                />
+                <InfoItem
+                  label="Maternal Uncle's Name"
+                  value={displayProfile.maternal_uncle_name}
                 />
                 <InfoItem
                   label="Professional Identity"

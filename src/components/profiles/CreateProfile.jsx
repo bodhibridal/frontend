@@ -77,7 +77,20 @@ export default function UserCreateForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    let updatedFields = { [name]: value };
+
+    if (name === "dob" && value) {
+      const birthDate = new Date(value);
+      const today = new Date();
+      let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        calculatedAge--;
+      }
+      updatedFields.age = calculatedAge > 0 ? calculatedAge : "";
+    }
+
+    setFormData((prev) => ({ ...prev, ...updatedFields }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
