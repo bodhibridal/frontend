@@ -103,8 +103,8 @@ export default function App() {
   return (
     <UserProfileProvider>
       <Routes>
-        {/* Admin Routes - NEW STRUCTURE */}
-        <Route path="/admin-login" element={<AdminLogin />} />
+        {/* Admin Routes */}
+        <Route path="/admin-login" element={<Navigate to="/admin" replace />} />
 
         {/* Main Admin Route with nested routes */}
         <Route

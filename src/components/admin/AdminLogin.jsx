@@ -30,7 +30,7 @@ const AdminLogin = () => {
       if (response.data.status === "success") {
         localStorage.setItem("adminToken", response.data.token);
         localStorage.setItem("adminData", JSON.stringify(response.data.admin));
-        navigate("/admin-dashboard");
+        navigate("/admin");
       } else {
         setError(response.data.message || "Login failed!");
       }

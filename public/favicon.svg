@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 10 84 82" width="100%" height="100%">
+  <!-- Bodhi Tree & Couple Symbol -->
+  <g transform="translate(0, 0)">
+    <!-- Base / Trunk (two figures forming tree base) -->
+    <path d="M 42 90 L 42 68 C 42 62, 38 56, 32 50 C 24 42, 14 38, 8 28 C 4 21, 6 12, 14 12 C 22 12, 28 20, 32 28 C 36 36, 38 45, 42 54 C 44 48, 48 38, 55 30 C 62 22, 72 16, 82 16 C 90 16, 94 24, 88 32 C 82 40, 72 44, 64 50 C 58 55, 54 62, 54 68 L 54 90 Z" fill="#E36A26" />
+    
+    <!-- Left Leaf / Branch Accent -->
+    <path d="M 32 50 C 22 45, 12 55, 18 68 C 24 80, 38 72, 40 62 Z" fill="#E36A26" opacity="0.9" />
+    
+    <!-- Right Leaf / Branch Accent -->
+    <path d="M 64 50 C 74 45, 84 55, 78 68 C 72 80, 58 72, 56 62 Z" fill="#E36A26" opacity="0.9" />
+
+    <!-- Top Right Floating Bodhi Leaf -->
+    <path d="M 76 12 C 84 4, 94 8, 92 18 C 90 26, 80 26, 76 18 Z" fill="#E36A26" />
+
+    <!-- Couple Head 1 (Upper Left Red Dot) -->
+    <circle cx="36" cy="24" r="8" fill="#DC2626" />
+
+    <!-- Couple Head 2 (Lower Right Red Dot) -->
+    <circle cx="58" cy="42" r="7" fill="#DC2626" />
+  </g>
+</svg>

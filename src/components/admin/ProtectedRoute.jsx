@@ -1,11 +1,10 @@
-// ProtectedRoute.jsx
-import { Navigate } from 'react-router-dom';
+import AdminLogin from './AdminLogin';
 
 const ProtectedRoute = ({ children }) => {
   const adminToken = localStorage.getItem('adminToken');
   
   if (!adminToken) {
-    return <Navigate to="/admin-login" replace />;
+    return <AdminLogin />;
   }
   
   return children;
