@@ -275,12 +275,14 @@ function Header() {
                   Login
                 </Link>
 
-                <Link
-                  to="/admin-login"
+                <a
+                  href="https://member-directory-frontend.onrender.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200 px-3 py-1"
                 >
-                  Admin Login
-                </Link>
+                  Member Directory
+                </a>
 
                 <Link
                   to="/register"
@@ -516,13 +518,15 @@ function Header() {
               ) : (
                 <div className="space-y-3">
                   {/* FIXED: Original Admin Login preserved */}
-                  <Link
-                    to="/admin-login"
+                  <a
+                    href="https://member-directory-frontend.onrender.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block py-3 px-4 text-center text-gray-700 hover:text-[#4D6D9E] hover:bg-gray-50 rounded-lg border border-gray-300 transition-colors font-medium"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Admin Login
-                  </Link>
+                    Member Directory
+                  </a>
 
                   <Link
                     to="/login"
