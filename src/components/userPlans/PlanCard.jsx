@@ -32,10 +32,11 @@ export default function PlanCard({ plan, config, theme, addToCart, handleBuy }) 
 
                 <div className="flex flex-col gap-3">
                     <button
-                        onClick={() => addToCart(plan)}
-                        className={`rounded-xl p-6 shadow border ${theme?.text || ""} ${theme?.border || ""} bg-gradient-to-br ${theme?.bg || ""} ...`}
+                        disabled={true}
+                        className="w-full py-3 rounded-xl bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed opacity-60 font-medium flex items-center justify-center gap-2 select-none"
+                        title="Locked"
                     >
-                        <i className="fa-solid fa-cart-shopping mr-2"></i> Add to Cart
+                        🔒 Add to Cart (Locked)
                     </button>
 
                     <button

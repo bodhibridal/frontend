@@ -238,19 +238,12 @@ function Header() {
           <div className="hidden lg:flex items-center gap-4">
             {isLoggedIn ? (
               <>
-                {/* Cart with Counter */}
-                <div className="relative">
-                  <Link
-                    to="/cart"
-                    className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200 flex items-center"
-                  >
-                    Cart 🛒
-                  </Link>
-                  {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-3 bg-[#FF66CC] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                      {cartCount}
-                    </span>
-                  )}
+                {/* Cart - Locked */}
+                <div
+                  className="relative text-gray-400 opacity-60 cursor-not-allowed font-medium select-none flex items-center gap-1"
+                  title="Locked"
+                >
+                  Cart 🛒 <span className="text-xs">🔒</span>
                 </div>
 
                 {/* Notification Bell - Original preserved */}
@@ -298,20 +291,13 @@ function Header() {
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-4">
-            {/* Cart for mobile - Original preserved */}
+            {/* Cart for mobile - Locked */}
             {isLoggedIn && (
-              <div className="relative mr-2">
-                <Link
-                  to="/cart"
-                  className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200 flex items-center"
-                >
-                  🛒
-                  {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-3 bg-[#FF66CC] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                      {cartCount}
-                    </span>
-                  )}
-                </Link>
+              <div
+                className="relative mr-2 text-gray-400 opacity-60 cursor-not-allowed select-none flex items-center gap-0.5"
+                title="Locked"
+              >
+                🛒 <span className="text-xs">🔒</span>
               </div>
             )}
 
