@@ -11,24 +11,40 @@ const SidebarItem = ({
   isOpen = false,
   onToggle,
   children,
+  disabled = false,
 }) => {
+  if (disabled) {
+    return (
+      <div
+        className="w-full flex items-center justify-between px-4 py-3.5 rounded-xl bg-gray-50/80 text-gray-400 opacity-60 cursor-not-allowed select-none transition-all duration-200"
+        title="Locked"
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-xl filter grayscale">{icon}</span>
+          <span className="font-medium text-gray-400">{label}</span>
+        </div>
+        <span className="text-xs bg-gray-200 text-gray-500 px-2 py-0.5 rounded-md font-medium flex items-center gap-1">
+          🔒 Locked
+        </span>
+      </div>
+    );
+  }
+
   if (isDropdown) {
     return (
       <div className="relative">
         <button
           onClick={onToggle}
-          className={`w-full flex items-center gap-3 px-4 py-4 text-left rounded-xl transition-all duration-200 ${
-            active
+          className={`w-full flex items-center gap-3 px-4 py-4 text-left rounded-xl transition-all duration-200 ${active
               ? "bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 border-r-2 border-indigo-600 shadow-sm"
               : "text-gray-700 hover:bg-gray-50 hover:translate-x-1"
-          }`}
+            }`}
         >
           <span className="text-xl">{icon}</span>
           <span className="flex-1 font-medium">{label}</span>
           <span
-            className={`transform transition-transform duration-200 ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={`transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+              }`}
           >
             ▼
           </span>
@@ -46,11 +62,10 @@ const SidebarItem = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center w-full px-4 py-4 text-left rounded-xl transition-all duration-200 ${
-        active
+      className={`flex items-center w-full px-4 py-4 text-left rounded-xl transition-all duration-200 ${active
           ? "bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 border-r-2 border-indigo-600 shadow-sm"
           : "text-gray-700 hover:bg-gray-50 hover:translate-x-1"
-      }`}
+        }`}
     >
       <span className="mr-3 text-xl">{icon}</span>
       <span className="font-medium">{label}</span>
@@ -65,7 +80,7 @@ export default function Sidebar({
   setSidebarOpen,
 }) {
   const navigate = useNavigate();
-  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(true);
 
   return (
     <>
@@ -79,29 +94,15 @@ export default function Sidebar({
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-20 w-64 bg-white shadow-xl transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 h-screen flex flex-col overflow-hidden`}
+        className={`fixed inset-y-0 left-0 z-20 w-64 bg-white shadow-xl transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 h-screen flex flex-col overflow-hidden`}
       >
-         {/* <div className="flex-shrink-0 p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-800 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-         <span className="text-[#13161673]"> Intentional </span> <span className="text-[#f5176c]"> Connetions </span>
-          </h2>
-          <p className="text-sm text-gray-500 mt-1">Find Your Perfect Match</p>
-        </div>  */}
-
- 
-
         <div className="flex-1 overflow-y-auto overflow-x-hidden py-4 px-4">
           <nav className="space-y-1">
             <SidebarItem
               icon="🏠"
               label="Dashboard"
-              active={activeSection === "dashboard"}
-              onClick={() => {
-                navigate("/dashboard");
-                setSidebarOpen(false);
-              }}
+              disabled={true}
             />
 
             <SidebarItem
@@ -117,7 +118,6 @@ export default function Sidebar({
               <button
                 onClick={() => {
                   navigate("/dashboard/profile");
-                  setProfileDropdownOpen(false);
                   setSidebarOpen(false);
                 }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-left text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-colors duration-200"
@@ -128,7 +128,6 @@ export default function Sidebar({
               <button
                 onClick={() => {
                   navigate("/dashboard/edit-profile");
-                  setProfileDropdownOpen(false);
                   setSidebarOpen(false);
                 }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-left text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-colors duration-200"
@@ -141,47 +140,28 @@ export default function Sidebar({
             <SidebarItem
               icon="💬"
               label="Messages"
-              active={activeSection === "messages"}
-              onClick={() => {
-                navigate("/dashboard/messages");
-                setSidebarOpen(false);
-              }}
+              disabled={true}
             />
             <SidebarItem
               icon="🔍"
               label="Advanced Search"
-              active={activeSection === "search"}
-              onClick={() => {
-                navigate("/dashboard/search");
-                setSidebarOpen(false);
-              }}
+              disabled={true}
             />
             <SidebarItem
               icon="👥"
               label="My Matches"
-              active={activeSection === "matches"}
-              onClick={() => {
-                navigate("/dashboard/matches");
-                setSidebarOpen(false);
-              }}
+              disabled={true}
             />
             <SidebarItem
               icon="👥"
               label="Browse Members"
-              onClick={() => {
-                navigate("/dashboard/members");
-                setSidebarOpen(false);
-              }}
+              disabled={true}
             />
 
             <SidebarItem
               icon="💳"
               label="Plan"
-              active={activeSection === "plans"}
-              onClick={() => {
-                navigate("/dashboard/plans");
-                setSidebarOpen(false);
-              }}
+              disabled={true}
             />
           </nav>
         </div>

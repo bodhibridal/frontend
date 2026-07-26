@@ -122,7 +122,7 @@ function Header() {
           <div className="flex items-center z-50">
             <Link to="/" className="">
               <img
-                 src={NewLogo2}
+                src={NewLogo2}
                 alt="Logo"
                 className="h-12 object-contain"
               />
@@ -163,12 +163,12 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to="/members"
-                      className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
+                    <span
+                      className="text-gray-400 opacity-60 cursor-not-allowed font-medium flex items-center gap-1 select-none"
+                      title="Locked"
                     >
-                      Members
-                    </Link>
+                      Members <span className="text-xs">🔒</span>
+                    </span>
                   </li>
                   <li>
                     <Link
@@ -189,7 +189,7 @@ function Header() {
                   Contact Us
                 </Link>
               </li>
-                    <li>
+              <li>
                 <Link
                   to="/buddhvihar"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200"
@@ -268,7 +268,7 @@ function Header() {
               <div className="flex items-center gap-3">
                 <h1></h1>
                 {/* FIXED: Original login links preserved */}
-                 <Link
+                <Link
                   to="/login"
                   className="text-gray-700 hover:text-[#4D6D9E] font-medium transition-colors duration-200 px-3 py-1"
                 >
@@ -288,11 +288,11 @@ function Header() {
                   to="/register"
                   className=" bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold  transition-all duration-200"
                 >
-                  Register 
+                  Register
                 </Link>
               </div>
             )}
-          </div> 
+          </div>
 
 
 
@@ -318,8 +318,8 @@ function Header() {
             {/* Notification Bell for mobile - Original preserved */}
             {isLoggedIn && localStorage.getItem("accessToken") && (
               <div className="mr-2">
-               <NotificationBell />
-                 
+                <NotificationBell />
+
               </div>
             )}
 
@@ -372,11 +372,10 @@ function Header() {
         {/* Mobile Menu Content - ORIGINAL LOGIC PRESERVED */}
         <div
           ref={mobileMenuRef}
-          className={`lg:hidden absolute top-full left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50 transition-all duration-300 ease-in-out ${
-            isMobileMenuOpen
+          className={`lg:hidden absolute top-full left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50 transition-all duration-300 ease-in-out ${isMobileMenuOpen
               ? "max-h-screen opacity-100"
               : "max-h-0 opacity-0 overflow-hidden"
-          }`}
+            }`}
         >
           <div className="container mx-auto px-4 py-4">
             {/* Mobile Navigation Links */}
@@ -416,13 +415,13 @@ function Header() {
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        to="/members"
-                        className="block py-3 px-4 text-gray-700 hover:text-[#4D6D9E] hover:bg-gray-50 rounded-lg transition-colors font-medium"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                      <span
+                        className="flex items-center justify-between py-3 px-4 text-gray-400 opacity-60 bg-gray-50 rounded-lg font-medium cursor-not-allowed select-none"
+                        title="Locked"
                       >
-                        Members
-                      </Link>
+                        <span>Members</span>
+                        <span className="text-xs">🔒 Locked</span>
+                      </span>
                     </li>
                     <li>
                       <Link
@@ -456,7 +455,7 @@ function Header() {
                   </Link>
                 </li> */}
 
-                 <li>
+                <li>
                   <Link
                     to="/buddhvihar"
                     className="block py-3 px-4 text-gray-700 hover:text-[#4D6D9E] hover:bg-gray-50 rounded-lg transition-colors font-medium"
@@ -502,9 +501,8 @@ function Header() {
                       {localStorage.getItem("adminToken")
                         ? "Admin User"
                         : profile?.first_name && profile?.last_name
-                        ? `Hello, ${profile.first_name} ${profile.last_name}`
-                        : `Hello, ${
-                            profile?.first_name || profile?.name || "User"
+                          ? `Hello, ${profile.first_name} ${profile.last_name}`
+                          : `Hello, ${profile?.first_name || profile?.name || "User"
                           }`}
                     </span>
                   </div>
@@ -541,7 +539,7 @@ function Header() {
                     className="block py-3 px-4 text-center bg-[#FF66CC] text-white rounded-lg font-semibold hover:bg-[#ff4dc2] transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Register 
+                    Register
                   </Link>
                 </div>
               )}
