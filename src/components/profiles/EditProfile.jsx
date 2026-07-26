@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserProfile } from "../context/UseProfileContext";
-import { updateUserProfile } from "../services/api";
+import { updateUserProfile, uploadImage, saveProfileImage, removeProfileImage } from "../services/api";
 import LifeRhythmsForm from "./LifeRhythmsForm";
 import axios from "axios";
 import InterestsForm from "./InterestsForm";
@@ -142,7 +142,7 @@ const mapToDBEnum = (field, value) => {
       "Prefer not to say": "Prefer not to say",
     },
 
-  
+
 
 
     // Smoking
@@ -383,12 +383,12 @@ const mapToUIEnum = (field, value) => {
       "Project-based": "Seasonal",
       "Travel-heavy": "Seasonal",
     },
-     drinking: {
+    drinking: {
       "NO": "No",
       "YES": "Yes",
       "SOCIAL": "Socially",
     },
-    
+
     // Smoking reverse mapping
     smoking: {
       "NO": "No",
@@ -627,46 +627,46 @@ export default function EditProfilePage() {
       setImageLoading(false);
     }
   };
-useEffect(() => {
-  const handleMessage = (event) => {
-    if (event.data.type === "FACE_DETECTED") {
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.data.type === "FACE_DETECTED") {
 
-      setFormData(prev => ({
-        ...prev,
-        age: event.data.age,
-        gender: event.data.gender,
-      }));
+        setFormData(prev => ({
+          ...prev,
+          age: event.data.age,
+          gender: event.data.gender,
+        }));
 
-      setImagePreview(event.data.image);
+        setImagePreview(event.data.image);
 
-      // 🔥 CONVERT BASE64 TO FILE
-      fetch(event.data.image)
-        .then(res => res.blob())
-        .then(async (blob) => {
-          const file = new File([blob], "camera.png", {
-            type: "image/png",
+        // 🔥 CONVERT BASE64 TO FILE
+        fetch(event.data.image)
+          .then(res => res.blob())
+          .then(async (blob) => {
+            const file = new File([blob], "camera.png", {
+              type: "image/png",
+            });
+
+            const imageUrl = await handleImageUpload(file);
+
+            if (imageUrl) {
+              setFinalProfileImage(imageUrl);  // 🔥 THIS IS CRITICAL
+            }
           });
 
-          const imageUrl = await handleImageUpload(file);
+        setShowCamera(false);
+      }
 
-          if (imageUrl) {
-            setFinalProfileImage(imageUrl);  // 🔥 THIS IS CRITICAL
-          }
-        });
+      if (event.data.type === "CLOSE_CAMERA") {
+        setShowCamera(false);
+      }
+    };
 
-      setShowCamera(false);
-    }
-
-    if (event.data.type === "CLOSE_CAMERA") {
-      setShowCamera(false);
-    }
-  };
-
-  window.addEventListener("message", handleMessage);
-  return () => {
-    window.removeEventListener("message", handleMessage);
-  };
-}, []);
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -745,8 +745,8 @@ useEffect(() => {
       age: profile.age || "",
       dob: profile.dob
         ? (typeof profile.dob === "string"
-            ? profile.dob.split("T")[0]
-            : new Date(profile.dob).toISOString().split("T")[0])
+          ? profile.dob.split("T")[0]
+          : new Date(profile.dob).toISOString().split("T")[0])
         : "",
       buddh_vihar: profile.buddh_vihar || "",
       gender: mapToUIEnum("gender", profile.gender),
@@ -793,8 +793,8 @@ useEffect(() => {
       health_activity_level: profile.health_activity_level || "",
       // smoking: profile.smoking || "",
       // drinking: profile.drinking || "",
-       drinking: mapToDBEnum("drinking", formData.drinking),
-    smoking: mapToDBEnum("smoking", formData.smoking),
+      drinking: mapToDBEnum("drinking", formData.drinking),
+      smoking: mapToDBEnum("smoking", formData.smoking),
       pets_preference: profile.pets_preference || "",
       religious_belief: profile.religious_belief || "",
       zodiac_sign: profile.zodiac_sign || "",
@@ -1250,71 +1250,70 @@ useEffect(() => {
     return { age, gender };
   };
 
-  //  Image Upload Handler
+  // Image Upload Handler
   const handleImageUpload = async (file) => {
     if (!file) return null;
     setImageLoading(true);
     try {
       const uploadFormData = new FormData();
       uploadFormData.append("image", file);
-      const uploadResponse = await axios.post(
-        "https://backend-q0wc.onrender.com/api/upload",
-        uploadFormData,
-        { headers: { "Content-Type": "multipart/form-data" } },
-      );
-      const saveResponse = await axios.post(
-        "https://backend-q0wc.onrender.com/api/saveProfileImage",
-        { user_id: profile.user_id, imageUrl: uploadResponse.data.imageUrl },
-      );
-      updateProfile(saveResponse.data.profiles);
-      setImagePreview(uploadResponse.data.imageUrl);
-      setFinalProfileImage(uploadResponse.data.imageUrl);
-      return uploadResponse.data.imageUrl;
+
+      const uploadResponse = await uploadImage(uploadFormData);
+      const imageUrl = uploadResponse.data.imageUrl;
+
+      if (profile?.user_id) {
+        const saveResponse = await saveProfileImage(profile.user_id, imageUrl);
+        if (saveResponse.data?.profiles) {
+          updateProfile(saveResponse.data.profiles);
+        }
+      }
+
+      setImagePreview(imageUrl);
+      setFinalProfileImage(imageUrl);
+      return imageUrl;
     } catch (error) {
       console.error("❌ Image upload error:", error);
-      alert("Image upload failed.");
+      alert(error?.response?.data?.message || "Image upload failed.");
       return null;
     } finally {
       setImageLoading(false);
     }
   };
-const handleImageSelect = async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
 
-  const reader = new FileReader();
+  const handleImageSelect = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  reader.onload = () => {
-    setImagePreview(reader.result);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+
+    const imageUrl = await handleImageUpload(file);
+    if (imageUrl) {
+      setFinalProfileImage(imageUrl);
+    }
+
+    await handleFaceDetection(file);
   };
-
-  reader.readAsDataURL(file);
-
-  const imageUrl = await handleImageUpload(file);
-  if (imageUrl) {
-    setFinalProfileImage(imageUrl);
-  }
-
-  await handleFaceDetection(file);
-};
-
-
 
   const handleRemoveProfilePic = async () => {
     if (
       window.confirm("Are you sure you want to remove your profile picture?")
     ) {
       try {
-        // 1. UI se hatao
-        setImagePreview(null);
+        if (profile?.user_id) {
+          await removeProfileImage(profile.user_id);
+        }
 
-        //  2. IMPORTANT: finalProfileImage ko NULL set karo (yeh backend jayega)
+        setImagePreview(null);
         setFinalProfileImage(null);
 
-        //  3. Context update karo (taaki ProfilePage mein bhi dikhe)
         updateProfile({
           ...profile,
           image_url: null,
+          profile_image: null,
         });
 
         alert("Profile picture removed!");
@@ -1324,15 +1323,15 @@ const handleImageSelect = async (e) => {
     }
   };
 
-const CAMERA_URL =
-  import.meta.env.MODE === "development"
-    ? "https://python-backend-oo6l.onrender.com"
-    : import.meta.env.VITE_FACE_CAMERA_URL || "https://python-backend-oo6l.onrender.com";
+  const CAMERA_URL =
+    import.meta.env.MODE === "development"
+      ? "https://python-backend-oo6l.onrender.com"
+      : import.meta.env.VITE_FACE_CAMERA_URL || "https://python-backend-oo6l.onrender.com";
 
   //  interests_categories से total interests calculate करो
   const totalCheckboxInterests =
     formData.interests_categories &&
-    typeof formData.interests_categories === "object"
+      typeof formData.interests_categories === "object"
       ? Object.values(formData.interests_categories).flat().length
       : 0;
 
@@ -1368,18 +1367,16 @@ const CAMERA_URL =
               <button
                 key={step}
                 onClick={() => goToStep(step)}
-                className={`flex flex-col items-center ${
-                  step <= currentStep ? "text-indigo-600" : "text-gray-400"
-                }`}
+                className={`flex flex-col items-center ${step <= currentStep ? "text-indigo-600" : "text-gray-400"
+                  }`}
               >
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${
-                    step === currentStep
+                  className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${step === currentStep
                       ? "bg-indigo-600 text-white"
                       : step < currentStep
                         ? "bg-indigo-100 text-indigo-600"
                         : "bg-gray-200 text-gray-400"
-                  }`}
+                    }`}
                 >
                   {step}
                 </div>
@@ -1438,7 +1435,7 @@ const CAMERA_URL =
                     <div className="w-32 h-32 rounded-full border-4 border-gray-300 overflow-hidden bg-gray-200 flex items-center justify-center">
                       {/*  Bas yeh condition: */}
                       {imagePreview ||
-                      (profile?.image_url && finalProfileImage !== null) ? (
+                        (profile?.image_url && finalProfileImage !== null) ? (
                         <img
                           src={imagePreview || profile?.image_url}
                           alt="Profile preview"
@@ -1454,15 +1451,15 @@ const CAMERA_URL =
                     {/* Remove button */}
                     {(imagePreview ||
                       (profile?.image_url && !removedImage)) && (
-                      <button
-                        type="button"
-                        onClick={handleRemoveProfilePic}
-                        className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
-                        title="Remove photo"
-                      >
-                        ✕
-                      </button>
-                    )}
+                        <button
+                          type="button"
+                          onClick={handleRemoveProfilePic}
+                          className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
+                          title="Remove photo"
+                        >
+                          ✕
+                        </button>
+                      )}
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4">
@@ -2272,8 +2269,8 @@ const CAMERA_URL =
 
                   {/* FIXED: Display interests_categories */}
                   {formData.interests_categories &&
-                  typeof formData.interests_categories === "object" &&
-                  Object.keys(formData.interests_categories).length > 0 ? (
+                    typeof formData.interests_categories === "object" &&
+                    Object.keys(formData.interests_categories).length > 0 ? (
                     <div className="mt-4 p-3 bg-white border rounded-md">
                       <div className="flex justify-between items-center mb-2">
                         <p className="font-medium text-gray-700">
@@ -2333,8 +2330,8 @@ const CAMERA_URL =
 
                     {/* Display existing prompts */}
                     {formData.prompts &&
-                    typeof formData.prompts === "object" &&
-                    Object.keys(formData.prompts).length > 0 ? (
+                      typeof formData.prompts === "object" &&
+                      Object.keys(formData.prompts).length > 0 ? (
                       <div className="mt-4 p-3 bg-white border rounded-md">
                         <div className="flex justify-between items-center mb-2">
                           <p className="font-medium text-gray-700">
@@ -2795,19 +2792,19 @@ const CAMERA_URL =
           </div>
         </form>
       </div>
-       {showCamera && (
-  <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-    <div className="bg-white rounded-lg overflow-hidden">
-      <iframe
-        src="https://python-backend-oo6l.onrender.com"
-        width="400"
-        height="600"
-        allow="camera"
-        className="border-none"
-      />
-    </div>
-  </div>
-)}
+      {showCamera && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg overflow-hidden">
+            <iframe
+              src="https://python-backend-oo6l.onrender.com"
+              width="400"
+              height="600"
+              allow="camera"
+              className="border-none"
+            />
+          </div>
+        </div>
+      )}
 
 
       {/* Life Rhythms Modal */}
