@@ -3,18 +3,17 @@ import axios from "axios";
 import { updatePlanStatus } from "../services/adminPlans.js";
 
 export default function ManagePlanModal({ plan, onClose, onUpdated }) {
-  const [isActive, setIsActive] = useState(plan.is_active === 1);
+  const [isActive, setIsActive] = useState(
+    Number(plan.is_active) === 1 || plan.is_active === true
+  );
 
   const handleToggle = async () => {
     try {
-      let updatePlanStatusApiCall = async (planId) => {
-        let res = await updatePlanStatus(planId);
-        const newStatus = res.data.newStatus;
-        setIsActive(newStatus === 1);
-        onUpdated(); // refresh list
-      };
-
-      updatePlanStatusApiCall(plan.id);
+      const res = await updatePlanStatus(plan.id);
+      const val = res.data.is_active !== undefined ? res.data.is_active : res.data.newStatus;
+      const updatedStatus = Number(val) === 1 || val === true;
+      setIsActive(updatedStatus);
+      if (onUpdated) onUpdated(); // refresh list
     } catch (err) {
       console.error("Error toggling plan:", err);
       alert("Failed to update plan status");

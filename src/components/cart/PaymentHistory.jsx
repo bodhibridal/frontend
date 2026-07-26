@@ -26,8 +26,8 @@ export default function PaymentHistory({ onClose }) {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const user_id = localStorage.getItem("user_id");
-        const res = await fetch(`https://backend-q0wc.onrender.com/payments/${user_id}`);
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3435";
+        const res = await fetch(`${API_BASE_URL}/payments/${user_id}`);
         const data = await res.json();
         setHistory(data);
       } catch (err) {

@@ -1257,13 +1257,14 @@ useEffect(() => {
     try {
       const uploadFormData = new FormData();
       uploadFormData.append("image", file);
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3435";
       const uploadResponse = await axios.post(
-        "https://backend-q0wc.onrender.com/api/upload",
+        `${API_BASE_URL}/api/upload`,
         uploadFormData,
         { headers: { "Content-Type": "multipart/form-data" } },
       );
       const saveResponse = await axios.post(
-        "https://backend-q0wc.onrender.com/api/saveProfileImage",
+        `${API_BASE_URL}/api/saveProfileImage`,
         { user_id: profile.user_id, imageUrl: uploadResponse.data.imageUrl },
       );
       updateProfile(saveResponse.data.profiles);

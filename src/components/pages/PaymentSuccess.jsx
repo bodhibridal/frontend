@@ -6,9 +6,39 @@ import { useSearchParams } from "react-router-dom";
 export default function PaymentSuccess() {
   const [params] = useSearchParams();
   const sessionId = params.get("session_id");
+  const planId = params.get("plan_id");
+  const urlUserId = params.get("user_id");
   const [open, setOpen] = useState(true);
+  const [activating, setActivating] = useState(true);
 
-  
+  useEffect(() => {
+    const confirmActivation = async () => {
+      try {
+        const userId = localStorage.getItem("user_id") || localStorage.getItem("userId") || urlUserId;
+        const token = localStorage.getItem("accessToken");
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3435";
+
+        await fetch(`${API_BASE_URL}/payments/confirm-success`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+          body: JSON.stringify({
+            session_id: sessionId,
+            plan_id: planId,
+            user_id: userId,
+          }),
+        });
+      } catch (err) {
+        console.error("❌ Error confirming plan activation:", err);
+      } finally {
+        setActivating(false);
+      }
+    };
+
+    confirmActivation();
+  }, [sessionId, planId, urlUserId]);
 
   if (!open) return null;
 

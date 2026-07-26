@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -11,16 +11,19 @@ const AdminLogin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem("adminToken")) {
+      navigate("/admin");
+    }
+  }, [navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const defaultUrl = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
-        ? "http://localhost:3435" 
-        : "https://backend-q0wc.onrender.com";
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || defaultUrl;
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3435";
 
       const response = await axios.post(
         `${API_BASE_URL}/api/admin/login`,

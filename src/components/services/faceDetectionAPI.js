@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const FACE_API_URL = 'https://facedetectionapi-rj35.onrender.com';
+const FACE_API_URL = import.meta.env.VITE_FACE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:3435';
 
 export const detectFaceFromImage = async (imageFile) => {
   try {

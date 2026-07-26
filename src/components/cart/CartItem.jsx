@@ -23,11 +23,9 @@ export default function CartItem({ item, handleRemove /* OLD: , handleBuy */ }) 
 
       console.log("Testing payment with user_id:", user_id, "plan:", item.plan);
 
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3435";
       const response = await fetch(
-        "https://backend-q0wc.onrender.com/payments/create-checkout-session",
-      
-      // const response = await fetch(
-      //   `${VITE_API_BASE_URL}/payments/create-checkout-session`,
+        `${API_BASE_URL}/payments/create-checkout-session`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -82,46 +80,34 @@ export default function CartItem({ item, handleRemove /* OLD: , handleBuy */ }) 
             </>
           }
 
-          {item.plan.duration &&
-            <>
-              <li className="flex items-center gap-2">
-                 Duration : {item.plan.duration} Days
-              </li>
-            </>
-          }
+          <li className="flex items-center gap-2">
+             Duration : {Number(item.plan.duration) === 0 ? "Lifetime ♾️" : `${item.plan.duration} Days`}
+          </li>
 
-          {item.plan.video_call_limit > 0 &&
-            <>
-              <li className="flex items-center gap-2">
-                <i className="fa-solid fa-video text-blue-500"></i>
-                Video Call Limit: {item.plan.video_call_limit}
-              </li>
-            </>
-          }
-          {item.plan.audio_call_limit > 0 &&
-            <>
-              <li className="flex items-center gap-2">
-               <i className="fa-solid fa-headphones text-blue-500"></i>
-               Audio Call Limit: {item.plan.audio_call_limit}
-              </li>
-            </>
-          }
-          {item.plan.people_search_limit > 0 &&
-            <>
-              <li className="flex items-center gap-2">
-           <i className="fa-solid fa-magnifying-glass text-blue-500"></i>
-           People Search Limit: {item.plan.people_search_limit}
-              </li>
-            </>
-          }
-          {item.plan.people_message_limit > 0 &&
-            <>
-              <li className="flex items-center gap-2">
-                <i className="fa-solid fa-message text-blue-500"></i>
-                Message Limit: {item.plan.people_message_limit}
-              </li>
-            </>
-          }
+          {item.plan.video_call_limit > 0 && (
+            <li className="flex items-center gap-2">
+              <i className="fa-solid fa-video text-blue-500"></i>
+              Video Call Limit: {item.plan.video_call_limit}
+            </li>
+          )}
+          {item.plan.audio_call_limit > 0 && (
+            <li className="flex items-center gap-2">
+              <i className="fa-solid fa-headphones text-blue-500"></i>
+              Audio Call Limit: {item.plan.audio_call_limit}
+            </li>
+          )}
+          {item.plan.people_search_limit > 0 && (
+            <li className="flex items-center gap-2">
+              <i className="fa-solid fa-magnifying-glass text-blue-500"></i>
+              Search Limit: {item.plan.people_search_limit}
+            </li>
+          )}
+          {item.plan.people_message_limit > 0 && (
+            <li className="flex items-center gap-2">
+              <i className="fa-solid fa-message text-blue-500"></i>
+              Message Limit: {item.plan.people_message_limit}
+            </li>
+          )}
          {item.plan.billing_info &&
             <>
               <li className="flex items-center gap-2">

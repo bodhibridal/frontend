@@ -8,6 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useUserProfile } from "../context/UseProfileContext";
+import { userAPI } from "../services/userApi";
 import Sidebar from "./Sidebar";
 import DashboardHome from "./DashboardContent";
 import MessagesSection from "./MessagesSection";
@@ -23,6 +24,7 @@ export default function UserDashboard() {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [planStatus, setPlanStatus] = useState(null);
 
   // Get active section from URL
   const getActiveSection = useCallback(() => {
@@ -39,13 +41,98 @@ export default function UserDashboard() {
 
   const activeSection = getActiveSection();
 
-  // Redirect if no token
+  // Redirect if no token & fetch plan status
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
       navigate("/login");
+      return;
     }
+
+    const fetchPlan = async () => {
+      try {
+        const res = await userAPI.getPlanStatus();
+        setPlanStatus(res.data);
+      } catch (err) {
+        console.error("Error fetching plan status:", err);
+        setPlanStatus({ is_free: true, plan_type: "Free" });
+      }
+    };
+    fetchPlan();
   }, [navigate]);
+
+  // Compute permissions dynamically
+  const getPermissions = () => {
+    if (!planStatus || !planStatus.active) {
+      return {
+        isFree: true,
+        isBasic: false,
+        isPro: false,
+        canAccessDashboard: false,
+        canAccessMessages: false,
+        canAccessSearch: false,
+        canAccessMatches: false,
+        canAccessMembers: false,
+      };
+    }
+
+    const typeStr = (
+      planStatus.plan_type ||
+      planStatus.plan?.type ||
+      planStatus.plan_name ||
+      planStatus.plan?.name ||
+      ""
+    ).toLowerCase();
+
+    const nameStr = (
+      planStatus.plan_name ||
+      planStatus.plan?.name ||
+      ""
+    ).toLowerCase();
+
+    const price = Number(planStatus.plan?.price ?? planStatus.price ?? 0);
+    const isFree = planStatus.is_free || typeStr === "free" || nameStr.includes("free") || price === 0;
+
+    if (isFree) {
+      return {
+        isFree: true,
+        isBasic: false,
+        isPro: false,
+        canAccessDashboard: false,
+        canAccessMessages: false,
+        canAccessMatches: false,
+        canAccessSearch: false,
+        canAccessMembers: false,
+      };
+    }
+
+    // Explicitly check for Advance / Pro / Premium / Gold tier (or price >= 30)
+    const isAdvanceOrPro =
+      typeStr.includes("pro") ||
+      typeStr.includes("advance") ||
+      typeStr.includes("premium") ||
+      typeStr.includes("gold") ||
+      nameStr.includes("pro") ||
+      nameStr.includes("advance") ||
+      nameStr.includes("premium") ||
+      nameStr.includes("gold") ||
+      price >= 30;
+
+    const isBasic = !isAdvanceOrPro;
+
+    return {
+      isFree: false,
+      isBasic,
+      isPro: isAdvanceOrPro,
+      canAccessDashboard: true,
+      canAccessMessages: true,
+      canAccessMatches: true,
+      canAccessSearch: isAdvanceOrPro,
+      canAccessMembers: isAdvanceOrPro,
+    };
+  };
+
+  const permissions = getPermissions();
 
   // Loading state
   if (loading) {
@@ -88,6 +175,8 @@ export default function UserDashboard() {
         activeSection={activeSection}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
+        permissions={permissions}
+        planStatus={planStatus}
       />
 
       {/* Main Content */}
@@ -108,22 +197,71 @@ export default function UserDashboard() {
           </div>
         </header>
 
-        {/* Routes */}
+        {/* Routes & Feature Protection */}
         <main className="flex-1 overflow-y-auto">
           <Routes>
-            <Route index element={<DashboardHome profile={profile} />} />
+            <Route
+              index
+              element={
+                permissions.canAccessDashboard ? (
+                  <DashboardHome profile={profile} />
+                ) : (
+                  <Navigate to="/dashboard/profile" replace />
+                )
+              }
+            />
             <Route path="profile/:userId?" element={<ProfilePage />} />
-            {/* <Route path="profile" element={<ProfilePage />} /> */}
-            {/* <Route path="profile/:userId" element={<ProfilePage />} /> */}
             <Route path="edit-profile" element={<EditProfilePage />} />
-            <Route path="messages" element={<MessagesSection />} />
-            <Route path="search" element={<AdvancedSearch />} />
-            <Route path="matches" element={<MatchesPage />} />
-            <Route path="members" element={<MemberPage />} />
+            <Route
+              path="messages"
+              element={
+                permissions.canAccessMessages ? (
+                  <MessagesSection />
+                ) : (
+                  <Navigate to="/dashboard/plans" replace />
+                )
+              }
+            />
+            <Route
+              path="search"
+              element={
+                permissions.canAccessSearch ? (
+                  <AdvancedSearch />
+                ) : (
+                  <Navigate to="/dashboard/plans" replace />
+                )
+              }
+            />
+            <Route
+              path="matches"
+              element={
+                permissions.canAccessMatches ? (
+                  <MatchesPage />
+                ) : (
+                  <Navigate to="/dashboard/plans" replace />
+                )
+              }
+            />
+            <Route
+              path="members"
+              element={
+                permissions.canAccessMembers ? (
+                  <MemberPage />
+                ) : (
+                  <Navigate to="/dashboard/plans" replace />
+                )
+              }
+            />
             <Route path="plans" element={<UserPlans />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-
-            {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
+            <Route
+              path="*"
+              element={
+                <Navigate
+                  to={permissions.isFree ? "/dashboard/profile" : "/dashboard"}
+                  replace
+                />
+              }
+            />
           </Routes>
         </main>
       </div>

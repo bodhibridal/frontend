@@ -5,9 +5,8 @@ import DeleteConfirmModal from "./DeleteConfirmModal.jsx";
 import { useNavigate } from "react-router-dom";
 import ManagePlanModal from "./ManagePlanModal.jsx";
 
-const BASE_URL = "https://backend-q0wc.onrender.com/api/admin/plans";
-
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://backend-q0wc.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3435";
+const BASE_URL = `${API_BASE_URL}/api/admin/plans`;
 
 export default function AdminPlans({
   editingId,
@@ -108,40 +107,46 @@ export default function AdminPlans({
               className="group relative rounded-xl p-5 bg-gradient-to-br from-white to-gray-200 shadow-md hover:shadow-xl hover:-translate-y-1 transition flex flex-col justify-between"
             >
               <div className="relative">
-                <h3 className="text-xl font-semibold text-center mb-3">
-                  {plan.name} — £{plan.price}
-                </h3>
-
-                {/* ⚙ Gear icon — hidden by default, visible on hover */}
-                <i
-                  className="absolute right-1 top-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 fa-solid fa-gear text-gray-600 hover:text-blue-600 text-xl cursor-pointer"
-                  onClick={() => openManageModal(plan)}
-                ></i>
+                <div className="flex items-center justify-between mb-3 px-2">
+                  <span
+                    className={`text-xs px-2.5 py-1 rounded-full font-semibold ${
+                      Number(plan.is_active) === 1 || plan.is_active === true
+                        ? "bg-green-100 text-green-700 border border-green-300"
+                        : "bg-red-100 text-red-700 border border-red-300"
+                    }`}
+                  >
+                    {Number(plan.is_active) === 1 || plan.is_active === true ? "Active" : "Inactive"}
+                  </span>
+                  <h3 className="text-lg font-bold text-gray-800">
+                    {plan.name} — £{plan.price}
+                  </h3>
+                  <i
+                    className="fa-solid fa-gear text-gray-500 hover:text-blue-600 text-xl cursor-pointer transition"
+                    title="Manage Plan Status"
+                    onClick={() => openManageModal(plan)}
+                  ></i>
+                </div>
               </div>
 
-              <ul className="text-gray-700 text-sm mb-4">
-                <li className="mb-1">Duration: {plan.duration} Days</li>
+              <ul className="text-gray-700 text-sm mb-4 space-y-1">
+                <li className="font-medium">Duration: {Number(plan.duration) === 0 ? "Lifetime ♾️" : `${plan.duration} Days`}</li>
 
-                <p>{plan.description}</p>
+                <p className="text-gray-600 my-1">{plan.description}</p>
 
                 {plan.video_call_limit > 0 && (
-                  <li className="mb-1">Video Calls: {plan.video_call_limit}</li>
-                )}
-                {plan.people_search_limit > 0 && (
-                  <li className="mb-1">
-                    Search Limit: {plan.people_search_limit}
-                  </li>
-                )}
-                {plan.people_message_limit > 0 && (
-                  <li className="mb-1">
-                    Message Limit: {plan.people_message_limit}
-                  </li>
+                  <li>Video Calls: {plan.video_call_limit}</li>
                 )}
                 {plan.audio_call_limit > 0 && (
-                  <li className="mb-1">Audio Calls: {plan.audio_call_limit}</li>
+                  <li>Audio Calls: {plan.audio_call_limit}</li>
+                )}
+                {plan.people_search_limit > 0 && (
+                  <li>Search Limit: {plan.people_search_limit}</li>
+                )}
+                {plan.people_message_limit > 0 && (
+                  <li>Message Limit: {plan.people_message_limit}</li>
                 )}
                 {plan.billing_info && (
-                  <li className="mb-1">Billing Info: {plan.billing_info}</li>
+                  <li>Billing Info: {plan.billing_info}</li>
                 )}
               </ul>
 

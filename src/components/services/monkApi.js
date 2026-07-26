@@ -39,8 +39,8 @@
 
 import api from "./axiosConfig";
 
-const BASE_URL = "https://backend-5e2b.onrender.com/api/monks";
-//const BASE_URL =  import.meta.env.VITE_API_BASE_URL ||"localhost:3435/api/monks";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3435";
+const BASE_URL = `${API_BASE_URL}/api/monks`;
 
 
 export const getMonks = async () => {

@@ -81,7 +81,7 @@ export default function Login() {
 
       const backendUrl =
         import.meta.env.VITE_API_BASE_URL ||
-        "https://backend-q0wc.onrender.com";
+        "http://localhost:3435";
       const apiUrl = `${backendUrl}/api/linkedin/auth-url`;
 
       console.log("📞 Calling backend for LinkedIn URL:", apiUrl);
