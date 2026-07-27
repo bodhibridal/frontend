@@ -113,17 +113,13 @@ export default function UserDashboard() {
           <Routes>
             <Route index element={<DashboardHome profile={profile} />} />
             <Route path="profile/:userId?" element={<ProfilePage />} />
-            {/* <Route path="profile" element={<ProfilePage />} /> */}
-            {/* <Route path="profile/:userId" element={<ProfilePage />} /> */}
             <Route path="edit-profile" element={<EditProfilePage />} />
-            <Route path="messages" element={<MessagesSection />} />
-            <Route path="search" element={<AdvancedSearch />} />
-            <Route path="matches" element={<MatchesPage />} />
-            <Route path="members" element={<MemberPage />} />
-            <Route path="plans" element={<UserPlans />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-
-            {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
+            <Route path="messages" element={<Navigate to="/dashboard/edit-profile" replace />} />
+            <Route path="search" element={<Navigate to="/dashboard/edit-profile" replace />} />
+            <Route path="matches" element={<Navigate to="/dashboard/edit-profile" replace />} />
+            <Route path="members" element={<Navigate to="/dashboard/edit-profile" replace />} />
+            <Route path="plans" element={<Navigate to="/dashboard/edit-profile" replace />} />
+            <Route path="*" element={<Navigate to="/dashboard/edit-profile" replace />} />
           </Routes>
         </main>
       </div>
