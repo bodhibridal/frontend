@@ -480,6 +480,7 @@ export default function EditProfilePage() {
     email: "",
     phone: "",
     alternate_phone: "",
+    whatsapp_number: "",
     age: "",
     dob: "",
     buddh_vihar: "",
@@ -742,6 +743,7 @@ export default function EditProfilePage() {
       email: profile.email || "",
       phone: profile.phone || "",
       alternate_phone: profile.alternate_phone || "",
+      whatsapp_number: profile.whatsapp_number || "",
       age: profile.age || "",
       dob: profile.dob
         ? (typeof profile.dob === "string"
@@ -947,6 +949,7 @@ export default function EditProfilePage() {
         email: formData.email.trim(),
         phone: formData.phone || null,
         alternate_phone: formData.alternate_phone || null,
+        whatsapp_number: formData.whatsapp_number || null,
         age: formData.age ? Number(formData.age) : null,
         dob: formData.dob || null,
         buddh_vihar: formData.buddh_vihar || null,
@@ -1579,16 +1582,35 @@ export default function EditProfilePage() {
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Alternate Phone (Optional)
+                      Alternate Phone <span className="font-normal text-gray-400">(Optional)</span>
                     </label>
                     <input
-                      type="text"
+                      type="tel"
                       name="alternate_phone"
                       value={formData.alternate_phone}
                       onChange={handleChange}
                       placeholder="+91 9876543210"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      WhatsApp Number{" "}
+                      <span className="font-normal text-gray-400">(Optional)</span>
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-500 text-base">📱</span>
+                      <input
+                        type="tel"
+                        name="whatsapp_number"
+                        value={formData.whatsapp_number}
+                        onChange={handleChange}
+                        placeholder="+91 9876543210"
+                        className="w-full pl-9 pr-3 py-2 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      />
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1">If different from your primary number</p>
                   </div>
 
                   <div>

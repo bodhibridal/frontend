@@ -438,6 +438,10 @@ export default function ProfilePage() {
                 <InfoItem label="Phone" value={displayProfile.phone} />
                 <InfoItem label="Alternate Phone" value={displayProfile.alternate_phone} />
                 <InfoItem
+                  label="WhatsApp Number"
+                  value={displayProfile.whatsapp_number}
+                />
+                <InfoItem
                   label="Date of Birth"
                   value={formatDateForDisplay(displayProfile.dob)}
                 />
