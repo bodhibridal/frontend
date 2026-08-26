@@ -30,12 +30,12 @@ api.interceptors.response.use(
     // Agar 401 error hai aur pehle try nahi kiya
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      
+
       console.log("🔄 Token expired, trying to refresh...");
-      
+
       try {
         const refreshToken = localStorage.getItem("refreshToken");
-        
+
         if (!refreshToken) {
           console.log("⚠️ No refresh token available");
           // Logout user
@@ -59,15 +59,15 @@ api.interceptors.response.use(
         );
 
         const newAccessToken = refreshResponse.data.accessToken;
-        
+
         if (newAccessToken) {
           // Save new access token
           localStorage.setItem("accessToken", newAccessToken);
           console.log("✅ New access token saved");
-          
+
           // Update original request header
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          
+
           // Retry original request
           return api(originalRequest);
         } else {
@@ -75,17 +75,17 @@ api.interceptors.response.use(
         }
       } catch (refreshError) {
         console.error("❌ Token refresh failed:", refreshError.response?.data || refreshError.message);
-        
+
         // Logout user
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("user");
         window.location.href = '/login';
-        
+
         return Promise.reject(refreshError);
       }
     }
-    
+
     return Promise.reject(error);
   }
 );
@@ -95,12 +95,12 @@ export const normalizeAuthResponse = (data = {}) => {
   const token = data?.accessToken || data?.token || data?.access_token || null;
   const refresh = data?.refreshToken || data?.refresh_token || null;
   const user = data?.user_profile || data?.user || data?.profile_info || null;
-  
+
   //  Save refresh token if available
   if (refresh) {
     localStorage.setItem("refreshToken", refresh);
   }
-  
+
   return { token, refresh, user };
 };
 
@@ -109,17 +109,17 @@ export const loginUser = async ({ email, password }) => {
   try {
     const res = await api.post("/api/login", { email, password });
     const data = res.data;
-    
+
     // Manual token save (Interceptor ki jagah)
     if (data.accessToken || data.token) {
       localStorage.setItem("accessToken", data.accessToken || data.token);
     }
-    
+
     //  Save refresh token
     if (data.refreshToken || data.refresh_token) {
       localStorage.setItem("refreshToken", data.refreshToken || data.refresh_token);
     }
-    
+
     return normalizeAuthResponse(data);
   } catch (err) {
     throw err;
@@ -131,17 +131,17 @@ export const registerUser = async (formData) => {
   try {
     const res = await api.post("/api/register", formData);
     const data = res.data;
-    
+
     // Manual token save
     if (data.accessToken || data.token) {
       localStorage.setItem("accessToken", data.accessToken || data.token);
     }
-    
+
     // Save refresh token
     if (data.refreshToken || data.refresh_token) {
       localStorage.setItem("refreshToken", data.refreshToken || data.refresh_token);
     }
-    
+
     return normalizeAuthResponse(data);
   } catch (err) {
     throw err;
@@ -177,13 +177,13 @@ export const updateUserProfile = async (profileData) => {
 export const getUserProfile = async () => {
   try {
     const res = await api.get("/api/me");
-    
+
     //  FIX: Combine data and prompts like UPDATE API format
     const normalizedProfile = {
       ...res.data.data,          // All profile fields
       prompts: res.data.prompts  // Add prompts inside
     };
-    
+
     console.log("🔄 Normalized Profile:", normalizedProfile);
     return normalizedProfile;  // Now matches UPDATE API format
   } catch (err) {
@@ -204,7 +204,7 @@ export const getUserProfile = async () => {
 
 //  Image Upload API HAI
 export const uploadImage = (formData) => {
-  return api.post('/upload', formData, {
+  return api.post('/api/upload', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -213,7 +213,7 @@ export const uploadImage = (formData) => {
 
 // Save Profile Image API
 export const saveProfileImage = (user_id, imageUrl) => {
-  return api.post('/saveProfileImage', {
+  return api.post('/api/saveProfileImage', {
     user_id,
     imageUrl,
   });
@@ -221,7 +221,7 @@ export const saveProfileImage = (user_id, imageUrl) => {
 
 //  NEW: Remove Profile Image API
 export const removeProfileImage = (user_id) => {
-  return api.post('/remove/profile-picture', {
+  return api.post('/api/remove/profile-picture', {
     user_id,
   });
 };
@@ -230,9 +230,9 @@ export const removeProfileImage = (user_id) => {
 export const refreshAuthToken = async () => {
   try {
     console.log("🔄 Attempting token refresh...");
-    
+
     const refreshToken = localStorage.getItem("refreshToken");
-    
+
     if (!refreshToken) {
       throw new Error("No refresh token available");
     }
@@ -249,16 +249,16 @@ export const refreshAuthToken = async () => {
     );
 
     const newAccessToken = response.data.accessToken;
-    
+
     if (newAccessToken) {
       localStorage.setItem("accessToken", newAccessToken);
-      return { 
-        token: newAccessToken, 
+      return {
+        token: newAccessToken,
         refresh: refreshToken,
-        success: true 
+        success: true
       };
     }
-    
+
     throw new Error("No access token received from refresh");
   } catch (error) {
     console.error("❌ Token refresh failed:", error.response?.data || error.message);

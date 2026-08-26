@@ -28,6 +28,7 @@ export default function Register() {
     maternal_uncle_name: "",
     buddh_vihar: "",
     alternate_phone: "",
+    whatsapp_number: "",
   });
 
   const [error, setError] = useState("");
@@ -75,6 +76,7 @@ export default function Register() {
         maternal_uncle_name: form.maternal_uncle_name || null,
         buddh_vihar: form.buddh_vihar || null,
         alternate_phone: form.alternate_phone || null,
+        whatsapp_number: form.whatsapp_number || null,
       };
 
       // Register the new user (API call only)
@@ -234,7 +236,7 @@ export default function Register() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Alternate Mobile Number (Optional)
+                Alternate Mobile Number <span className="font-normal text-gray-400">(Optional)</span>
               </label>
               <input
                 type="tel"
@@ -245,6 +247,26 @@ export default function Register() {
                 className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white font-medium text-gray-700"
               />
             </div>
+          </div>
+
+          {/* WhatsApp Number */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              WhatsApp Number{" "}
+              <span className="font-normal text-gray-400">(Optional)</span>
+            </label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-500 text-lg">📱</span>
+              <input
+                type="tel"
+                name="whatsapp_number"
+                placeholder="e.g. +91 9876543210"
+                value={form.whatsapp_number}
+                onChange={handleChange}
+                className="w-full pl-9 pr-4 py-3 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition bg-white font-medium text-gray-700"
+              />
+            </div>
+            <p className="text-xs text-gray-400 mt-1">If different from your mobile number</p>
           </div>
 
           <div className="grid grid-cols-3 gap-3">

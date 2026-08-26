@@ -270,25 +270,26 @@ export default function ProfilePage() {
           <div className="flex gap-2">
             <button
               onClick={() => navigate(-1)}
-              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition text-sm"
+              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition text-sm cursor-pointer"
             >
               Go Back
             </button>
 
             {isCurrentUser && (
               <button
-                onClick={() => navigate("/edit-profile")}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm"
+                onClick={() => navigate("/dashboard/edit-profile")}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm cursor-pointer"
               >
                 Edit Profile
               </button>
             )}
 
             <button
-              onClick={() => navigate("/dashboard")}
-              className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition text-sm"
+              disabled
+              className="px-4 py-2 bg-gray-200 text-gray-400 rounded-lg text-sm cursor-not-allowed flex items-center gap-1 opacity-70"
+              title="Dashboard Locked"
             >
-              Dashboard
+              <span>🔒</span> Dashboard
             </button>
           </div>
         </div>
@@ -436,6 +437,10 @@ export default function ProfilePage() {
                 />
                 <InfoItem label="Phone" value={displayProfile.phone} />
                 <InfoItem label="Alternate Phone" value={displayProfile.alternate_phone} />
+                <InfoItem
+                  label="WhatsApp Number"
+                  value={displayProfile.whatsapp_number}
+                />
                 <InfoItem
                   label="Date of Birth"
                   value={formatDateForDisplay(displayProfile.dob)}
